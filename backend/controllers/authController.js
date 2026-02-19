@@ -13,7 +13,7 @@ const generateToken = (id) => {
 // @access  Public
 export const register = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, role, adminSecret } = req.body;
 
         // Check if user exists
         const userExists = await User.findOne({ email });
@@ -21,11 +21,19 @@ export const register = async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        // Create user
+        // Validate admin secret key if registering as admin
+        if (role === 'admin') {
+            if (!adminSecret || adminSecret !== process.env.ADMIN_SECRET) {
+                return res.status(403).json({ message: 'Invalid admin secret key' });
+            }
+        }
+
+        // Create user (role defaults to 'user' if not provided)
         const user = await User.create({
             name,
             email,
-            password
+            password,
+            role: role === 'admin' ? 'admin' : 'user'
         });
 
         if (user) {

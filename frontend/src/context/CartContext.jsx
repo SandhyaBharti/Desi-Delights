@@ -10,19 +10,29 @@ export const useCart = () => {
     return context;
 };
 
-export const CartProvider = ({ children }) => {
+export const CartProvider = ({ children, userId }) => {
+    // Use a user-specific localStorage key so carts don't bleed across accounts
+    const cartKey = userId ? `cartItems_${userId}` : null;
+
     const [cartItems, setCartItems] = useState([]);
 
+    // Load the correct cart whenever the logged-in user changes
     useEffect(() => {
-        const savedCart = localStorage.getItem('cartItems');
-        if (savedCart) {
-            setCartItems(JSON.parse(savedCart));
+        if (cartKey) {
+            const savedCart = localStorage.getItem(cartKey);
+            setCartItems(savedCart ? JSON.parse(savedCart) : []);
+        } else {
+            // No user logged in → show empty cart
+            setCartItems([]);
         }
-    }, []);
+    }, [cartKey]);
 
+    // Persist the cart to the correct user-specific key
     useEffect(() => {
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    }, [cartItems]);
+        if (cartKey) {
+            localStorage.setItem(cartKey, JSON.stringify(cartItems));
+        }
+    }, [cartItems, cartKey]);
 
     const addToCart = (product, quantity = 1) => {
         setCartItems((prev) => {

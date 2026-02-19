@@ -18,10 +18,10 @@ const Login = () => {
         setLoading(true);
 
         try {
-            await login(email, password);
-            navigate('/');
+            const data = await login(email, password);
+            // Redirect based on role
+            navigate(data.role === 'admin' ? '/' : '/products');
         } catch (err) {
-            // Handle different error response formats
             const errorMessage = err.response?.data?.message ||
                 err.response?.data?.errors?.[0]?.msg ||
                 err.message ||
@@ -42,6 +42,24 @@ const Login = () => {
                             Welcome Back
                         </h1>
                         <p className="text-slate-400">Sign in to your account</p>
+                    </div>
+
+                    {/* Role hint */}
+                    <div className="flex gap-3 mb-6">
+                        <div className="flex-1 flex items-center gap-2 bg-slate-900/60 border border-slate-700 rounded-lg px-4 py-3">
+                            <span className="text-xl">👤</span>
+                            <div>
+                                <p className="text-xs font-semibold text-slate-300">User</p>
+                                <p className="text-xs text-slate-500">Browse, cart & orders</p>
+                            </div>
+                        </div>
+                        <div className="flex-1 flex items-center gap-2 bg-slate-900/60 border border-secondary/30 rounded-lg px-4 py-3">
+                            <span className="text-xl">🛡️</span>
+                            <div>
+                                <p className="text-xs font-semibold text-secondary">Admin</p>
+                                <p className="text-xs text-slate-500">Full access</p>
+                            </div>
+                        </div>
                     </div>
 
                     <ErrorMessage message={error} />
@@ -71,7 +89,7 @@ const Login = () => {
                             />
                         </div>
 
-                        <button type="submit" className="btn btn-primary w-full" disabled={loading}>
+                        <button type="submit" className="btn btn-primary w-full py-3 font-bold" disabled={loading}>
                             {loading ? 'Signing in...' : 'Sign In'}
                         </button>
                     </form>

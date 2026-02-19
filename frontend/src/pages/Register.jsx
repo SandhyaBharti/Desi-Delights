@@ -8,6 +8,8 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [role, setRole] = useState('user');
+    const [adminSecret, setAdminSecret] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -31,10 +33,9 @@ const Register = () => {
         setLoading(true);
 
         try {
-            await register(name, email, password);
-            navigate('/');
+            await register(name, email, password, role, adminSecret);
+            navigate(role === 'admin' ? '/' : '/products');
         } catch (err) {
-            // Handle different error response formats
             const errorMessage = err.response?.data?.message ||
                 err.response?.data?.errors?.[0]?.msg ||
                 err.message ||
@@ -54,12 +55,67 @@ const Register = () => {
                         <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary-light to-secondary bg-clip-text text-transparent">
                             Create Account
                         </h1>
-                        <p className="text-slate-400">Start managing your inventory</p>
+                        <p className="text-slate-400">Join Desi Delights today</p>
                     </div>
 
                     <ErrorMessage message={error} />
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Role Toggle */}
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-slate-300 mb-3 text-center">
+                            Register as
+                        </label>
+                        <div className="flex rounded-lg overflow-hidden border border-slate-600 bg-slate-900/50">
+                            <button
+                                type="button"
+                                onClick={() => { setRole('user'); setAdminSecret(''); }}
+                                className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-semibold transition-all duration-200 ${role === 'user'
+                                    ? 'bg-primary text-white shadow-lg'
+                                    : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                                    }`}
+                            >
+                                <span className="text-lg">👤</span>
+                                User
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setRole('admin')}
+                                className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-semibold transition-all duration-200 ${role === 'admin'
+                                    ? 'bg-secondary text-white shadow-lg'
+                                    : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                                    }`}
+                            >
+                                <span className="text-lg">🛡️</span>
+                                Admin
+                            </button>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-2 text-center">
+                            {role === 'user'
+                                ? 'You can browse products, add to cart & place orders'
+                                : 'You get full access to manage products, orders & analytics'}
+                        </p>
+
+                        {/* Admin Secret Key — only shown for admin role */}
+                        {role === 'admin' && (
+                            <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                                <label className="block text-sm font-medium text-amber-400 mb-2">
+                                    🔑 Admin Secret Key
+                                </label>
+                                <input
+                                    type="password"
+                                    value={adminSecret}
+                                    onChange={(e) => setAdminSecret(e.target.value)}
+                                    placeholder="Enter the admin secret key"
+                                    className="input border-amber-500/40 focus:border-amber-400"
+                                    required={role === 'admin'}
+                                />
+                                <p className="text-xs text-amber-500/70 mt-2">Contact your system administrator for the secret key.</p>
+                            </div>
+                        )}
+
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-5">
                         <div>
                             <label className="block text-sm font-medium text-slate-300 mb-2">Name</label>
                             <input
@@ -108,8 +164,14 @@ const Register = () => {
                             />
                         </div>
 
-                        <button type="submit" className="btn btn-primary w-full" disabled={loading}>
-                            {loading ? 'Creating account...' : 'Sign Up'}
+                        <button
+                            type="submit"
+                            className={`btn w-full font-bold py-3 ${role === 'admin' ? 'btn-secondary' : 'btn-primary'}`}
+                            disabled={loading}
+                        >
+                            {loading
+                                ? 'Creating account...'
+                                : `Sign Up as ${role === 'admin' ? '🛡️ Admin' : '👤 User'}`}
                         </button>
                     </form>
 

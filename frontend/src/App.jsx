@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -12,33 +13,44 @@ import Orders from './pages/Orders';
 import Cart from './pages/Cart';
 import Activity from './pages/Activity';
 
+// Separate inner component so we can access AuthContext for userId
+const AppRoutes = () => {
+    const { user } = useAuth();
+
+    return (
+        <CartProvider userId={user?._id}>
+            <Router>
+                <div className="min-h-screen">
+                    <Navbar />
+                    <Routes>
+                        {/* Public Routes */}
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+
+                        {/* Admin-only Routes */}
+                        <Route path="/" element={<AdminRoute><Dashboard /></AdminRoute>} />
+                        <Route path="/products/new" element={<AdminRoute><ProductForm /></AdminRoute>} />
+                        <Route path="/products/edit/:id" element={<AdminRoute><ProductForm /></AdminRoute>} />
+                        <Route path="/activity" element={<AdminRoute><Activity /></AdminRoute>} />
+
+                        {/* User + Admin Routes */}
+                        <Route path="/products" element={<PrivateRoute><Products /></PrivateRoute>} />
+                        <Route path="/orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
+                        <Route path="/cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
+
+                        {/* Redirect */}
+                        <Route path="*" element={<Navigate to="/products" />} />
+                    </Routes>
+                </div>
+            </Router>
+        </CartProvider>
+    );
+};
+
 function App() {
     return (
         <AuthProvider>
-            <CartProvider>
-                <Router>
-                    <div className="min-h-screen">
-                        <Navbar />
-                        <Routes>
-                            {/* Public Routes */}
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
-
-                            {/* Protected Routes */}
-                            <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                            <Route path="/products" element={<PrivateRoute><Products /></PrivateRoute>} />
-                            <Route path="/products/new" element={<PrivateRoute><ProductForm /></PrivateRoute>} />
-                            <Route path="/products/edit/:id" element={<PrivateRoute><ProductForm /></PrivateRoute>} />
-                            <Route path="/orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
-                            <Route path="/cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
-                            <Route path="/activity" element={<PrivateRoute><Activity /></PrivateRoute>} />
-
-                            {/* Redirect */}
-                            <Route path="*" element={<Navigate to="/" />} />
-                        </Routes>
-                    </div>
-                </Router>
-            </CartProvider>
+            <AppRoutes />
         </AuthProvider>
     );
 }

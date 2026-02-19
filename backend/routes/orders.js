@@ -6,7 +6,7 @@ import {
     updateOrderStatus,
     deleteOrder
 } from '../controllers/orderController.js';
-import { protect } from '../middleware/auth.js';
+import { protect, admin } from '../middleware/auth.js';
 import { orderValidation, validate } from '../utils/validation.js';
 
 const router = express.Router();
@@ -17,7 +17,7 @@ router.route('/')
 
 router.route('/:id')
     .get(protect, getOrder)
-    .put(protect, updateOrderStatus)
-    .delete(protect, deleteOrder);
+    .put(protect, admin, updateOrderStatus)
+    .delete(protect, admin, deleteOrder);
 
 export default router;
