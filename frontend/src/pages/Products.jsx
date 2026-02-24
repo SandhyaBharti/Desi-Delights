@@ -23,9 +23,6 @@ const Products = () => {
     console.log('Current user info:', userInfo);
     console.log('Is admin check:', isAdmin);
     console.log('User role:', userInfo?.role);
-    
-    // Temporary force admin for testing - REMOVE THIS LINE AFTER TESTING
-    const forceAdmin = true; // TEMPORARY - DELETE AFTER TESTING
 
     const categories = ['Electronics', 'Clothing', 'Food', 'Books', 'Home', 'Sports', 'Other'];
 
@@ -89,7 +86,7 @@ const Products = () => {
                         <p className="text-slate-600 text-lg">Discover amazing items in our collection</p>
                     </div>
                     <div className="flex gap-2">
-                        {(isAdmin || forceAdmin) && (
+                        {isAdmin && (
                             <Link to="/products/new" className="btn btn-primary shadow-lg hover:shadow-xl">
                                 <span className="text-lg">➕</span>
                                 Add Product
@@ -226,7 +223,7 @@ const Products = () => {
                                         <span>🛒</span>
                                         Add to Cart
                                     </button>
-                                    {(isAdmin || forceAdmin) && (
+                                    {isAdmin && (
                                         <Link
                                             to={`/products/edit/${product._id}`}
                                             className="btn btn-outline"
@@ -234,7 +231,7 @@ const Products = () => {
                                             <span>✏️</span>
                                         </Link>
                                     )}
-                                    {(isAdmin || forceAdmin) && (
+                                    {isAdmin && (
                                         <button
                                             onClick={() => handleDelete(product._id)}
                                             className="btn btn-danger"
