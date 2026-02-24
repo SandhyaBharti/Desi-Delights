@@ -14,19 +14,19 @@ const Products = () => {
     const [sortBy, setSortBy] = useState('createdAt');
     const [order, setOrder] = useState('desc');
     const { addToCart } = useCart();
-    const { user } = useAuth();
+    const { userInfo } = useAuth();
 
     // Check if user is admin
-    const isAdmin = user && user.role === 'admin';
-
+    const isAdmin = userInfo && userInfo.role === 'admin';
+    
     // Debug logging to check admin status
     console.log('=== ADMIN DEBUG ===');
-    console.log('Current user info:', user);
-    console.log('User role:', user?.role);
+    console.log('Current user info:', userInfo);
+    console.log('User role:', userInfo?.role);
     console.log('Is admin check:', isAdmin);
-    console.log('Type of user:', typeof user);
-    console.log('Type of user.role:', typeof user?.role);
-
+    console.log('Type of userInfo:', typeof userInfo);
+    console.log('Type of userInfo.role:', typeof userInfo?.role);
+    
     // TEMPORARY: Force admin buttons to show for testing
     const showAdminButtons = isAdmin || true; // FORCE SHOW FOR TESTING
 
@@ -38,16 +38,11 @@ const Products = () => {
 
     const fetchProducts = async () => {
         try {
-            console.log('=== FETCHING PRODUCTS ===');
-            console.log('API call to:', '/products');
-            console.log('Params:', { search, category, sortBy, order });
+            const params = { search, category, sortBy, order };
             const { data } = await api.get('/products', { params });
-            console.log('Products received:', data);
-            console.log('Products length:', data?.length);
             setProducts(data);
         } catch (err) {
             console.error('Failed to fetch products:', err);
-            console.error('Error details:', err.response?.data);
         } finally {
             setLoading(false);
         }
@@ -105,7 +100,7 @@ const Products = () => {
                         )}
                     </div>
                 </div>
-
+                
                 {/* Filters */}
                 <div className="card-hover mb-8 animate-slide-up">
                     <div className="p-6">
@@ -203,7 +198,7 @@ const Products = () => {
                                 )}
                             </div>
 
-                            {/* Product Details */}
+                            {/* Product Details */} 
                             <div className="p-4">
                                 <div className="mb-2">
                                     <h3 className="text-lg font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors">
