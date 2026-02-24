@@ -7,7 +7,6 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('user');
-    const [adminSecret, setAdminSecret] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -147,23 +146,6 @@ const Login = () => {
                             </div>
                         </div>
 
-                        {/* Admin Secret Key - only shown for admin role */}
-                        {role === 'admin' && (
-                            <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    🔑 Admin Secret Key
-                                </label>
-                                <input
-                                    type="password"
-                                    value={adminSecret}
-                                    onChange={(e) => setAdminSecret(e.target.value)}
-                                    placeholder="Enter admin secret key"
-                                    className="input"
-                                    required={role === 'admin'}
-                                />
-                                <p className="text-xs text-slate-500 mt-2">Contact your system administrator for the secret key.</p>
-                            </div>
-                        )}
 
                         <button
                             type="submit"

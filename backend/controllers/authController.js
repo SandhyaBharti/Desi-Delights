@@ -23,7 +23,7 @@ export const register = async (req, res) => {
 
         // Validate admin secret key if registering as admin
         if (role === 'admin') {
-            if (!adminSecret || adminSecret !== process.env.ADMIN_SECRET) {
+            if (!adminSecret || adminSecret !== process.env.ADMIN_SECRET_KEY) {
                 return res.status(403).json({ message: 'Invalid admin secret key' });
             }
         }
@@ -73,6 +73,35 @@ export const login = async (req, res) => {
         } else {
             res.status(401).json({ message: 'Invalid email or password' });
         }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// @desc    Update user role to admin
+// @route   PUT /api/auth/update-role
+// @access  Private
+export const updateRole = async (req, res) => {
+    try {
+        const { adminSecret } = req.body;
+
+        if (!adminSecret || adminSecret !== process.env.ADMIN_SECRET_KEY) {
+            return res.status(403).json({ message: 'Invalid admin secret key' });
+        }
+
+        const user = await User.findByIdAndUpdate(
+            req.user._id,
+            { role: 'admin' },
+            { new: true }
+        );
+
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            token: generateToken(user._id)
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

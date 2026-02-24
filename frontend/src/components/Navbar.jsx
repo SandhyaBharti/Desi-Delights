@@ -2,12 +2,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useState, useEffect, useRef } from 'react';
+import api from '../api/axios';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
     const { getTotalItems } = useCart();
     const navigate = useNavigate();
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+    const [showUpgrade, setShowUpgrade] = useState(false);
+    const [upgradeSecret, setUpgradeSecret] = useState('');
+    const [upgradeError, setUpgradeError] = useState('');
+    const [upgradeLoading, setUpgradeLoading] = useState(false);
     const dropdownRef = useRef(null);
 
     // Close dropdown when clicking outside
@@ -27,6 +32,21 @@ const Navbar = () => {
     const handleLogout = () => {
         logout();
         navigate('/login');
+    };
+
+    const handleUpgradeRole = async (e) => {
+        e.preventDefault();
+        setUpgradeError('');
+        setUpgradeLoading(true);
+        try {
+            const { data } = await api.put('/auth/update-role', { adminSecret: upgradeSecret });
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            window.location.reload();
+        } catch (err) {
+            setUpgradeError(err.response?.data?.message || 'Failed to upgrade role');
+        } finally {
+            setUpgradeLoading(false);
+        }
     };
 
     const isAdmin = user?.role === 'admin';
@@ -57,6 +77,12 @@ const Navbar = () => {
                                         <span className="flex items-center gap-2">
                                             <span className="text-lg">📊</span>
                                             <span className="font-semibold">Dashboard</span>
+                                        </span>
+                                    </Link>
+                                    <Link to="/users" className="nav-link">
+                                        <span className="flex items-center gap-2">
+                                            <span className="text-lg">👥</span>
+                                            <span className="font-semibold">Users</span>
                                         </span>
                                     </Link>
                                     <Link to="/activity" className="nav-link">
@@ -104,11 +130,10 @@ const Navbar = () => {
                                         onClick={() => setShowProfileDropdown(!showProfileDropdown)}
                                         className="flex items-center gap-3 hover:scale-105 transition-all duration-300"
                                     >
-                                        <div className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all duration-300 ${
-                                            isAdmin
+                                        <div className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all duration-300 ${isAdmin
                                                 ? 'bg-gradient-to-r from-purple-500/20 to-purple-600/20 text-purple-700 border-purple-300/50'
                                                 : 'bg-gradient-to-r from-indigo-500/20 to-indigo-600/20 text-indigo-700 border-indigo-300/50'
-                                        }`}>
+                                            }`}>
                                             {isAdmin ? '🛡️ Admin' : '👤 User'}
                                         </div>
                                         <span className="text-slate-700 font-bold text-sm">{user.name}</span>
@@ -116,7 +141,7 @@ const Navbar = () => {
                                             {showProfileDropdown ? '▲' : '▼'}
                                         </span>
                                     </button>
-                                    
+
                                     {/* Profile Dropdown */}
                                     {showProfileDropdown && (
                                         <div className="absolute right-0 mt-2 w-64 glass-morphism border border-slate-200 rounded-xl shadow-2xl overflow-hidden animate-fade-in">
@@ -138,14 +163,56 @@ const Navbar = () => {
                                                 <div className="px-3 py-2 text-slate-600 text-xs">
                                                     Member since: {new Date().toLocaleDateString()}
                                                 </div>
+                                                {/* Upgrade to Admin */}
+                                                {!isAdmin && (
+                                                    <div className="mt-2 border-t border-slate-200 pt-2">
+                                                        {!showUpgrade ? (
+                                                            <button
+                                                                onClick={() => setShowUpgrade(true)}
+                                                                className="w-full text-left px-3 py-2 text-xs text-purple-600 font-semibold hover:bg-purple-50 rounded-lg transition-colors"
+                                                            >
+                                                                🛡️ Upgrade to Admin
+                                                            </button>
+                                                        ) : (
+                                                            <form onSubmit={handleUpgradeRole} className="px-3 py-2 space-y-2">
+                                                                <p className="text-xs font-semibold text-slate-700">Enter Admin Secret Key:</p>
+                                                                <input
+                                                                    type="password"
+                                                                    value={upgradeSecret}
+                                                                    onChange={(e) => setUpgradeSecret(e.target.value)}
+                                                                    placeholder="Admin secret key"
+                                                                    className="w-full text-xs border border-slate-300 rounded-lg px-2 py-1.5 focus:outline-none focus:border-purple-400"
+                                                                    autoFocus
+                                                                />
+                                                                {upgradeError && <p className="text-red-500 text-xs">{upgradeError}</p>}
+                                                                <div className="flex gap-2">
+                                                                    <button
+                                                                        type="submit"
+                                                                        disabled={upgradeLoading}
+                                                                        className="flex-1 bg-purple-600 text-white text-xs py-1.5 rounded-lg hover:bg-purple-700 transition-colors"
+                                                                    >
+                                                                        {upgradeLoading ? '...' : 'Confirm'}
+                                                                    </button>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => { setShowUpgrade(false); setUpgradeError(''); setUpgradeSecret(''); }}
+                                                                        className="flex-1 bg-slate-200 text-slate-600 text-xs py-1.5 rounded-lg hover:bg-slate-300 transition-colors"
+                                                                    >
+                                                                        Cancel
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        )}
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     )}
                                 </div>
-                                
+
                                 {/* Logout button */}
-                                <button 
-                                    onClick={handleLogout} 
+                                <button
+                                    onClick={handleLogout}
                                     className="btn btn-ghost group relative overflow-hidden"
                                 >
                                     <span className="relative z-10 flex items-center gap-2">

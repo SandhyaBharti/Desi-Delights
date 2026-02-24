@@ -12,6 +12,7 @@ import ProductForm from './pages/ProductForm';
 import Orders from './pages/Orders';
 import Cart from './pages/Cart';
 import Activity from './pages/Activity';
+import Users from './pages/Users';
 
 // Separate inner component so we can access AuthContext for userId
 const AppRoutes = () => {
@@ -32,6 +33,7 @@ const AppRoutes = () => {
                         <Route path="/products/new" element={<AdminRoute><ProductForm /></AdminRoute>} />
                         <Route path="/products/edit/:id" element={<AdminRoute><ProductForm /></AdminRoute>} />
                         <Route path="/activity" element={<AdminRoute><Activity /></AdminRoute>} />
+                        <Route path="/users" element={<AdminRoute><Users /></AdminRoute>} />
 
                         {/* User + Admin Routes */}
                         <Route path="/products" element={<PrivateRoute><Products /></PrivateRoute>} />
