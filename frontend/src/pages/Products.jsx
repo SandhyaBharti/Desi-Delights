@@ -19,6 +19,10 @@ const Products = () => {
     // Check if user is admin
     const isAdmin = userInfo && userInfo.role === 'admin';
     
+    // Debug: Log user info and admin status
+    console.log('User info:', userInfo);
+    console.log('Is admin:', isAdmin);
+    
     // Show admin secret key
     const [showSecret, setShowSecret] = useState(false);
     const toggleSecret = () => setShowSecret(!showSecret);
@@ -98,6 +102,7 @@ const Products = () => {
                                 title="Show Admin Secret"
                             >
                                 <span className="text-lg">{showSecret ? '👁️' : '👁️‍🗨️'}</span>
+                                <span className="ml-1 text-xs">{showSecret ? 'Hide' : 'Show'}</span>
                             </button>
                         )}
                     </div>
