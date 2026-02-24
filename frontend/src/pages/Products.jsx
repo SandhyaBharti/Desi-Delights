@@ -19,6 +19,10 @@ const Products = () => {
     // Check if user is admin
     const isAdmin = userInfo && userInfo.role === 'admin';
     
+    // Debug logging
+    console.log('User info:', userInfo);
+    console.log('Is admin:', isAdmin);
+    
     // Show admin secret key
     const [showSecret, setShowSecret] = useState(false);
     const toggleSecret = () => setShowSecret(!showSecret);
@@ -42,12 +46,18 @@ const Products = () => {
     };
 
     const handleDelete = async (id) => {
+        console.log('Delete function called for product:', id);
+        console.log('Is admin:', isAdmin);
+        
         if (!confirm('Are you sure you want to delete this product?')) return;
 
         try {
+            console.log('Sending delete request...');
             await api.delete(`/products/${id}`);
             setProducts(products.filter(p => p._id !== id));
+            console.log('Product deleted successfully');
         } catch (err) {
+            console.error('Delete error:', err);
             alert('Failed to delete product');
         }
     };
