@@ -26,10 +26,6 @@ const Products = () => {
     
     // Temporary force admin for testing - REMOVE THIS LINE AFTER TESTING
     const forceAdmin = true; // TEMPORARY - DELETE AFTER TESTING
-    
-    // Show admin secret key
-    const [showSecret, setShowSecret] = useState(false);
-    const toggleSecret = () => setShowSecret(!showSecret);
 
     const categories = ['Electronics', 'Clothing', 'Food', 'Books', 'Home', 'Sports', 'Other'];
 
@@ -99,41 +95,9 @@ const Products = () => {
                                 Add Product
                             </Link>
                         )}
-                        {(isAdmin || forceAdmin) && (
-                            <button
-                                onClick={toggleSecret}
-                                className="btn btn-outline shadow-lg hover:shadow-xl"
-                                title="Show Admin Secret"
-                            >
-                                <span className="text-lg">{showSecret ? '👁️' : '👁️‍🗨️'}</span>
-                                <span className="ml-1 text-xs">{showSecret ? 'Hide' : 'Show'}</span>
-                            </button>
-                        )}
                     </div>
                 </div>
                 
-                {/* Admin Secret Display */}
-                {isAdmin && showSecret && (
-                    <div className="mb-6 animate-fade-in">
-                        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 rounded-xl shadow-lg">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <h3 className="text-lg font-bold mb-1">🔑 Admin Secret Key</h3>
-                                    <p className="text-sm opacity-90">JWT Secret for Development</p>
-                                </div>
-                                <div className="text-right">
-                                    <code className="bg-black/20 px-3 py-1 rounded text-xs">
-                                        process.env.JWT_SECRET
-                                    </code>
-                                </div>
-                            </div>
-                            <div className="mt-3 text-xs opacity-75">
-                                ⚠️ Keep this secret secure and never share it publicly
-                            </div>
-                        </div>
-                    </div>
-                )}
-
                 {/* Filters */}
                 <div className="card-hover mb-8 animate-slide-up">
                     <div className="p-6">
