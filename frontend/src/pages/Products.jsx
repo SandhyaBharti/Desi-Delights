@@ -18,6 +18,17 @@ const Products = () => {
 
     // Check if user is admin
     const isAdmin = userInfo && userInfo.role === 'admin';
+    
+    // Debug logging to check admin status
+    console.log('=== ADMIN DEBUG ===');
+    console.log('Current user info:', userInfo);
+    console.log('User role:', userInfo?.role);
+    console.log('Is admin check:', isAdmin);
+    console.log('Type of userInfo:', typeof userInfo);
+    console.log('Type of userInfo.role:', typeof userInfo?.role);
+    
+    // TEMPORARY: Force admin buttons to show for testing
+    const showAdminButtons = isAdmin || true; // FORCE SHOW FOR TESTING
 
     const categories = ['Electronics', 'Clothing', 'Food', 'Books', 'Home', 'Sports', 'Other'];
 
@@ -81,7 +92,7 @@ const Products = () => {
                         <p className="text-slate-600 text-lg">Discover amazing items in our collection</p>
                     </div>
                     <div className="flex gap-2">
-                        {isAdmin && (
+                        {showAdminButtons && (
                             <Link to="/products/new" className="btn btn-primary shadow-lg hover:shadow-xl">
                                 <span className="text-lg">➕</span>
                                 Add Product
@@ -218,7 +229,7 @@ const Products = () => {
                                         <span>🛒</span>
                                         Add to Cart
                                     </button>
-                                    {isAdmin && (
+                                    {showAdminButtons && (
                                         <Link
                                             to={`/products/edit/${product._id}`}
                                             className="btn btn-outline"
@@ -226,7 +237,7 @@ const Products = () => {
                                             <span>✏️</span>
                                         </Link>
                                     )}
-                                    {isAdmin && (
+                                    {showAdminButtons && (
                                         <button
                                             onClick={() => handleDelete(product._id)}
                                             className="btn btn-danger"
