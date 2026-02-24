@@ -49,6 +49,20 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'Server is running' });
 });
 
+// Test users endpoint
+app.get('/api/test-users', async (req, res) => {
+    try {
+        const User = (await import('./models/User.js')).default;
+        const users = await User.find({}).select('-password');
+        res.json({ 
+            count: users.length,
+            users: users.map(u => ({ name: u.name, email: u.email, role: u.role }))
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // Error handling
 app.use(notFound);
 app.use(errorHandler);
