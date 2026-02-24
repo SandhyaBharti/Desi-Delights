@@ -34,4 +34,11 @@ api.interceptors.response.use(
     }
 );
 
+// Helper function to get full image URL
+export const getImageUrl = (imageUrl) => {
+    if (!imageUrl) return '';
+    if (imageUrl.startsWith('http')) return imageUrl;
+    return `${window.location.origin}${imageUrl}`;
+};
+
 export default api;

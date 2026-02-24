@@ -3,7 +3,7 @@ import { LineChart, Line, PieChart, Pie, BarChart, Bar, XAxis, YAxis, CartesianG
 import api from '../api/axios';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#3b82f6'];
+const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f43f5e', '#f59e0b', '#10b981'];
 
 const Dashboard = () => {
     const [analytics, setAnalytics] = useState(null);
@@ -28,7 +28,15 @@ const Dashboard = () => {
     if (loading) return <LoadingSpinner />;
     if (error) return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-            <div className="bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded-lg">{error}</div>
+            <div className="card border border-red-200 bg-red-50 text-red-700 px-6 py-4 rounded-xl animate-slide-up">
+                <div className="flex items-center gap-3">
+                    <span className="text-2xl">⚠️</span>
+                    <div>
+                        <p className="font-semibold">Error</p>
+                        <p className="text-sm text-red-600">{error}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
     if (!analytics) return null;
@@ -37,137 +45,151 @@ const Dashboard = () => {
         <div className="min-h-screen py-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mb-8 animate-fade-in">
-                    <h1 className="text-4xl font-bold mb-2">Analytics Dashboard</h1>
-                    <p className="text-slate-400">Overview of your inventory and sales performance</p>
+                    <h1 className="text-5xl font-bold mb-2 gradient-text">Analytics Dashboard</h1>
+                    <p className="text-slate-600 text-lg">Overview of your inventory and sales performance</p>
                 </div>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in">
-                    <div className="card flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-lg bg-primary/20 flex items-center justify-center text-3xl">
-                            📦
-                        </div>
-                        <div>
-                            <h3 className="text-3xl font-bold">{analytics.inventory.totalProducts}</h3>
-                            <p className="text-slate-400 text-sm">Total Products</p>
-                        </div>
-                    </div>
-
-                    <div className="card flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-lg bg-green-500/20 flex items-center justify-center text-3xl">
-                            💰
-                        </div>
-                        <div>
-                            <h3 className="text-3xl font-bold">₹{analytics.sales.totalRevenue.toFixed(2)}</h3>
-                            <p className="text-slate-400 text-sm">Total Revenue</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div className="card-hover p-6 animate-slide-up" style={{ animationDelay: '0ms' }}>
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-sm font-medium text-slate-600">Total Products</p>
+                                <p className="text-3xl font-bold text-slate-800">{analytics.totalProducts || 0}</p>
+                            </div>
+                            <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
+                                <span className="text-2xl">📦</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="card flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-lg bg-secondary/20 flex items-center justify-center text-3xl">
-                            🛍️
-                        </div>
-                        <div>
-                            <h3 className="text-3xl font-bold">{analytics.sales.totalOrders}</h3>
-                            <p className="text-slate-400 text-sm">Total Orders</p>
+                    <div className="card-hover p-6 animate-slide-up" style={{ animationDelay: '100ms' }}>
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-sm font-medium text-slate-600">Total Orders</p>
+                                <p className="text-3xl font-bold text-slate-800">{analytics.totalOrders || 0}</p>
+                            </div>
+                            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                <span className="text-2xl">📋</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="card flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-lg bg-yellow-500/20 flex items-center justify-center text-3xl">
-                            ⚠️
+                    <div className="card-hover p-6 animate-slide-up" style={{ animationDelay: '200ms' }}>
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-sm font-medium text-slate-600">Total Revenue</p>
+                                <p className="text-3xl font-bold text-slate-800">${analytics.totalRevenue || 0}</p>
+                            </div>
+                            <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                <span className="text-2xl">💰</span>
+                            </div>
                         </div>
-                        <div>
-                            <h3 className="text-3xl font-bold">{analytics.inventory.lowStockProducts}</h3>
-                            <p className="text-slate-400 text-sm">Low Stock Alerts</p>
+                    </div>
+
+                    <div className="card-hover p-6 animate-slide-up" style={{ animationDelay: '300ms' }}>
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-sm font-medium text-slate-600">Total Users</p>
+                                <p className="text-3xl font-bold text-slate-800">{analytics.totalUsers || 0}</p>
+                            </div>
+                            <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                                <span className="text-2xl">👥</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Charts */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 animate-fade-in">
-                    {/* Category Distribution */}
-                    <div className="card">
-                        <h3 className="text-xl font-semibold mb-4">Category Distribution</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div className="card p-6 animate-slide-up" style={{ animationDelay: '400ms' }}>
+                        <h2 className="text-xl font-semibold text-slate-800 mb-4">Sales Trend</h2>
                         <ResponsiveContainer width="100%" height={300}>
-                            <PieChart>
-                                <Pie
-                                    data={analytics.inventory.categoryStats}
-                                    cx="50%"
-                                    cy="50%"
-                                    labelLine={false}
-                                    label={({ _id, count }) => `${_id}: ${count}`}
-                                    outerRadius={100}
-                                    fill="#8884d8"
-                                    dataKey="count"
-                                    nameKey="_id"
-                                >
-                                    {analytics.inventory.categoryStats.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                </Pie>
-                                <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid #475569', borderRadius: '8px' }} />
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </div>
-
-                    {/* Sales Trend */}
-                    <div className="card">
-                        <h3 className="text-xl font-semibold mb-4">Sales Trend (Last 7 Days)</h3>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <LineChart data={analytics.sales.salesTrend}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
-                                <XAxis dataKey="_id" stroke="#94a3b8" />
-                                <YAxis stroke="#94a3b8" />
-                                <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid #475569', borderRadius: '8px' }} />
+                            <LineChart data={analytics.salesTrend || []}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                                <XAxis dataKey="date" stroke="#64748b" />
+                                <YAxis stroke="#64748b" />
+                                <Tooltip 
+                                    contentStyle={{ 
+                                        backgroundColor: 'white', 
+                                        border: '1px solid #e2e8f0',
+                                        borderRadius: '8px'
+                                    }} 
+                                />
                                 <Legend />
-                                <Line type="monotone" dataKey="revenue" stroke="#6366f1" strokeWidth={2} name="Revenue (₹)" />
-                                <Line type="monotone" dataKey="count" stroke="#10b981" strokeWidth={2} name="Orders" />
+                                <Line 
+                                    type="monotone" 
+                                    dataKey="sales" 
+                                    stroke="#6366f1" 
+                                    strokeWidth={2}
+                                    dot={{ fill: '#6366f1', r: 4 }}
+                                    activeDot={{ r: 6 }}
+                                />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
-                </div>
 
-                {/* Top Products */}
-                <div className="mb-8 animate-fade-in">
-                    <div className="card">
-                        <h3 className="text-xl font-semibold mb-4">Top Selling Products</h3>
+                    <div className="card p-6 animate-slide-up" style={{ animationDelay: '500ms' }}>
+                        <h2 className="text-xl font-semibold text-slate-800 mb-4">Product Categories</h2>
                         <ResponsiveContainer width="100%" height={300}>
-                            <BarChart data={analytics.sales.topProducts}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
-                                <XAxis dataKey="productName" stroke="#94a3b8" />
-                                <YAxis stroke="#94a3b8" />
-                                <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid #475569', borderRadius: '8px' }} />
-                                <Legend />
-                                <Bar dataKey="totalRevenue" fill="#6366f1" name="Revenue (₹)" />
-                                <Bar dataKey="totalQuantity" fill="#8b5cf6" name="Quantity" />
-                            </BarChart>
+                            <PieChart>
+                                <Pie
+                                    data={analytics.categories || []}
+                                    cx="50%"
+                                    cy="50%"
+                                    labelLine={false}
+                                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                                    outerRadius={80}
+                                    fill="#8884d8"
+                                    dataKey="value"
+                                >
+                                    {(analytics.categories || []).map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip />
+                            </PieChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
 
-                {/* Recent Activity */}
-                <div className="animate-fade-in">
-                    <div className="card">
-                        <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
-                        <div className="space-y-3">
-                            {analytics.recentActivities.map((activity) => (
-                                <div key={activity._id} className="flex items-start gap-3 p-3 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 transition-colors">
-                                    <div className="text-2xl">
-                                        {activity.action === 'created' && '➕'}
-                                        {activity.action === 'updated' && '✏️'}
-                                        {activity.action === 'deleted' && '🗑️'}
-                                        {activity.action === 'ordered' && '🛒'}
-                                    </div>
-                                    <div className="flex-1">
-                                        <p className="text-slate-100">{activity.description}</p>
-                                        <p className="text-slate-400 text-sm mt-1">
-                                            {activity.userName} • {new Date(activity.timestamp).toLocaleString()}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                {/* Recent Orders */}
+                <div className="card p-6 animate-slide-up" style={{ animationDelay: '600ms' }}>
+                    <h2 className="text-xl font-semibold text-slate-800 mb-4">Recent Orders</h2>
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead>
+                                <tr className="border-b border-slate-200">
+                                    <th className="text-left py-3 px-4 text-sm font-medium text-slate-600">Order ID</th>
+                                    <th className="text-left py-3 px-4 text-sm font-medium text-slate-600">Customer</th>
+                                    <th className="text-left py-3 px-4 text-sm font-medium text-slate-600">Amount</th>
+                                    <th className="text-left py-3 px-4 text-sm font-medium text-slate-600">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(analytics.recentOrders || []).map((order, index) => (
+                                    <tr key={order._id} className="border-b border-slate-100 hover:bg-slate-50">
+                                        <td className="py-3 px-4 text-sm text-slate-800">#{order._id?.slice(-6) || 'N/A'}</td>
+                                        <td className="py-3 px-4 text-sm text-slate-800">{order.user?.name || 'N/A'}</td>
+                                        <td className="py-3 px-4 text-sm text-slate-800">${order.totalAmount || 0}</td>
+                                        <td className="py-3 px-4">
+                                            <span className={`badge ${
+                                                order.status === 'completed' ? 'badge-success' :
+                                                order.status === 'pending' ? 'badge-warning' :
+                                                'badge-error'
+                                            }`}>
+                                                {order.status || 'Unknown'}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {(analytics.recentOrders || []).length === 0 && (
+                            <div className="text-center py-8">
+                                <p className="text-slate-500">No recent orders found</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

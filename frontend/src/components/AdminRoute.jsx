@@ -18,7 +18,7 @@ const AdminRoute = ({ children }) => {
 
     if (user.role !== 'admin') {
         return (
-            <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900">
+            <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-orange-300 via-orange-400 to-orange-500">
                 <div className="text-center animate-fade-in">
                     <div className="text-7xl mb-6">🚫</div>
                     <h1 className="text-3xl font-bold text-white mb-3">Access Denied</h1>

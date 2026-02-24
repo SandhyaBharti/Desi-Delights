@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../api/axios';
-import { useCart } from '../context/CartContext';
+import api, { getImageUrl } from '../api/axios';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorMessage from '../components/ErrorMessage';
+import { useCart } from '../context/CartContext';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -44,7 +45,23 @@ const Products = () => {
 
     const handleAddToCart = (product) => {
         addToCart(product, 1);
-        alert(`${product.name} added to cart!`);
+        
+        // Create a toast notification instead of alert
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-20 right-4 glass-morphism border border-emerald-200 text-emerald-700 px-6 py-3 rounded-xl shadow-lg z-50 animate-slide-up';
+        toast.innerHTML = `
+            <div class="flex items-center gap-2">
+                <span class="text-lg">✅</span>
+                <span class="font-semibold">${product.name} added to cart!</span>
+            </div>
+        `;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(100%)';
+            setTimeout(() => document.body.removeChild(toast), 300);
+        }, 3000);
     };
 
     if (loading) return <LoadingSpinner />;
@@ -52,98 +69,176 @@ const Products = () => {
     return (
         <div className="min-h-screen py-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Header */}
                 <div className="flex items-center justify-between mb-8 animate-fade-in">
                     <div>
-                        <h1 className="text-4xl font-bold mb-2">Products</h1>
-                        <p className="text-slate-400">Manage your inventory</p>
+                        <h1 className="text-5xl font-bold mb-2 gradient-text">Products</h1>
+                        <p className="text-slate-600 text-lg">Discover amazing items in our collection</p>
                     </div>
-                    <Link to="/products/new" className="btn btn-primary">
-                        + Add Product
+                    <Link to="/products/new" className="btn btn-primary shadow-lg hover:shadow-xl">
+                        <span className="text-lg">➕</span>
+                        Add Product
                     </Link>
                 </div>
 
                 {/* Filters */}
-                <div className="card mb-8 animate-fade-in">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <input
-                            type="text"
-                            placeholder="Search products..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="input"
-                        />
+                <div className="card-hover mb-8 animate-slide-up">
+                    <div className="p-6">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div className="relative">
+                                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400">
+                                    
+                                </span>
+                                <input
+                                    type="text"
+                                    placeholder="🔎 Search products..."
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    className="input pl-12 appearance-none"
+                                />
+                            </div>
 
-                        <select value={category} onChange={(e) => setCategory(e.target.value)} className="input">
-                            <option value="">All Categories</option>
-                            {categories.map(cat => (
-                                <option key={cat} value={cat}>{cat}</option>
-                            ))}
-                        </select>
+                            <div className="relative">
+                                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400">
+                                    
+                                </span>
+                                <select value={category} onChange={(e) => setCategory(e.target.value)} className="input pl-12 appearance-none">
+                                    <option value="">🛍️ All Categories</option>
+                                    {categories.map(cat => (
+                                        <option key={cat} value={cat}>{cat}</option>
+                                    ))}
+                                </select>
+                            </div>
 
-                        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="input">
-                            <option value="createdAt">Sort by Date</option>
-                            <option value="name">Sort by Name</option>
-                            <option value="price">Sort by Price</option>
-                            <option value="stock">Sort by Stock</option>
-                        </select>
+                            <div className="relative">
+                                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400">
+                                    
+                                </span>
+                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="input pl-12 appearance-none">
+                                    <option value="createdAt">🗓️ Sort by Date</option>
+                                    <option value="name">Sort by Name</option>
+                                    <option value="price">Sort by Price</option>
+                                    <option value="stock">Sort by Stock</option>
+                                </select>
+                            </div>
 
-                        <select value={order} onChange={(e) => setOrder(e.target.value)} className="input">
-                            <option value="desc">Descending</option>
-                            <option value="asc">Ascending</option>
-                        </select>
+                            <div className="relative">
+                                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400">
+                                    
+                                </span>
+                                <select value={order} onChange={(e) => setOrder(e.target.value)} className="input pl-12 appearance-none">
+                                    <option value="desc">⬇️ Descending</option>
+                                    <option value="asc">⬆️ Ascending</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 {/* Products Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
-                    {products.map((product) => (
-                        <div key={product._id} className="card">
-                            <div className="flex items-start justify-between mb-4">
-                                <div className="flex-1">
-                                    <h3 className="text-xl font-semibold mb-1">{product.name}</h3>
-                                    <span className={`badge ${product.status === 'active' ? 'badge-success' :
-                                        product.status === 'inactive' ? 'badge-warning' :
-                                            'badge-error'
-                                        }`}>
-                                        {product.status}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fade-in">
+                    {products.map((product, index) => (
+                        <div 
+                            key={product._id} 
+                            className="card-hover group hover:scale-105 transition-all duration-500"
+                            style={{ animationDelay: `${index * 100}ms` }}
+                        >
+                            {/* Product Image */}
+                            <div className="relative mb-4 h-48 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl overflow-hidden">
+                                {product.imageUrl ? (
+                                    <img 
+                                        src={getImageUrl(product.imageUrl)} 
+                                        alt={product.name}
+                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                        onError={(e) => {
+                                            console.error('Image failed to load:', product.imageUrl);
+                                            e.target.style.display = 'none';
+                                        }}
+                                        onLoad={() => {
+                                            console.log('Image loaded successfully:', product.imageUrl);
+                                        }}
+                                    />
+                                ) : (
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <span className="text-6xl opacity-50">
+                                            {product.category === 'Electronics' && '📱'}
+                                            {product.category === 'Clothing' && '👕'}
+                                            {product.category === 'Food' && '🍔'}
+                                            {product.category === 'Books' && '📚'}
+                                            {product.category === 'Home' && '🏠'}
+                                            {product.category === 'Sports' && '⚽'}
+                                            {product.category === 'Other' && '📦'}
+                                        </span>
+                                    </div>
+                                )}
+                                {product.stock < 10 && (
+                                    <div className="absolute top-2 right-2">
+                                        <span className="badge badge-warning">Low Stock</span>
+                                    </div>
+                                )}
+                                                            </div>
+
+                            {/* Product Details */}
+                            <div className="p-4">
+                                <div className="mb-2">
+                                    <h3 className="text-lg font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors">
+                                        {product.name}
+                                    </h3>
+                                    <p className="text-sm text-slate-500">{product.category}</p>
+                                </div>
+
+                                <div className="flex items-center justify-between mb-3">
+                                    <span className="text-2xl font-bold text-indigo-600">
+                                        ₹{product.price}
+                                    </span>
+                                    <span className="text-sm text-slate-500">
+                                        {product.stock} in stock
                                     </span>
                                 </div>
-                                <span className="badge badge-info">{product.category}</span>
-                            </div>
 
-                            <p className="text-slate-400 text-sm mb-4 line-clamp-2">{product.description}</p>
+                                <p className="text-sm text-slate-600 mb-4 line-clamp-2">
+                                    {product.description}
+                                </p>
 
-                            <div className="flex items-center justify-between mb-4 text-sm">
-                                <div>
-                                    <p className="text-slate-400">Price</p>
-                                    <p className="text-2xl font-bold text-green-400">₹{product.price}</p>
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={() => handleAddToCart(product)}
+                                        className="btn btn-primary flex-1"
+                                        disabled={product.stock === 0}
+                                    >
+                                        <span>🛒</span>
+                                        Add to Cart
+                                    </button>
+                                    <Link
+                                        to={`/products/edit/${product._id}`}
+                                        className="btn btn-outline"
+                                    >
+                                        <span>✏️</span>
+                                    </Link>
+                                    <button 
+                                        onClick={() => handleDelete(product._id)} 
+                                        className="btn btn-danger"
+                                    >
+                                        <span>🗑️</span>
+                                    </button>
                                 </div>
-                                <div className="text-right">
-                                    <p className="text-slate-400">Stock</p>
-                                    <p className={`text-xl font-semibold ${product.stock <= 10 ? 'text-red-400' : 'text-slate-100'}`}>
-                                        {product.stock}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="flex gap-2">
-                                <button onClick={() => handleAddToCart(product)} disabled={product.stock === 0} className="btn btn-primary flex-1">
-                                    🛒 Add to Cart
-                                </button>
-                                <Link to={`/products/edit/${product._id}`} className="btn btn-secondary">
-                                    ✏️
-                                </Link>
-                                <button onClick={() => handleDelete(product._id)} className="btn btn-danger">
-                                    🗑️
-                                </button>
                             </div>
                         </div>
                     ))}
                 </div>
 
+                {/* Empty State */}
                 {products.length === 0 && (
-                    <div className="text-center py-12 text-slate-400">
-                        <p className="text-xl">No products found</p>
+                    <div className="text-center py-20 animate-fade-in">
+                        <div className="inline-flex items-center justify-center w-24 h-24 bg-slate-800 rounded-full mb-6">
+                            <span className="text-4xl">📦</span>
+                        </div>
+                        <h3 className="text-2xl font-bold text-slate-300 mb-2">No products found</h3>
+                        <p className="text-slate-500 mb-6">Try adjusting your search or filters</p>
+                        <Link to="/products/new" className="btn btn-primary">
+                            <span>➕</span>
+                            Add Your First Product
+                        </Link>
                     </div>
                 )}
             </div>
