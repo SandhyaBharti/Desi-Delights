@@ -18,11 +18,6 @@ const Products = () => {
 
     // Check if user is admin
     const isAdmin = userInfo && userInfo.role === 'admin';
-    
-    // Debug logging to check admin status
-    console.log('Current user info:', userInfo);
-    console.log('Is admin check:', isAdmin);
-    console.log('User role:', userInfo?.role);
 
     const categories = ['Electronics', 'Clothing', 'Food', 'Books', 'Home', 'Sports', 'Other'];
 
