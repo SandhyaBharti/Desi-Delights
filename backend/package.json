@@ -5,8 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "node server.js",
-    "start": "node --watch server.js"
+    "dev": "node --env-file=.env server.js",
+    "start": "node --env-file=.env --watch server.js"
   },
   "keywords": [
     "ecommerce",

@@ -69,7 +69,7 @@ const Register = () => {
                         <h1 className="text-4xl font-bold mb-2 gradient-text">
                             Create Account
                         </h1>
-                        <p className="text-slate-600 text-lg">Join Desi Delights today</p>
+                        <p className="text-slate-600 text-lg">Join iNet Mart today</p>
                     </div>
 
                     <ErrorMessage message={error} />
@@ -88,7 +88,6 @@ const Register = () => {
                                 <div className="text-center">
                                     <span className="text-2xl mb-2 block">👤</span>
                                     <p className="text-sm font-semibold">User</p>
-                                    <p className="text-xs mt-1">Browse & Shop</p>
                                 </div>
                             </button>
                             <button
@@ -104,9 +103,7 @@ const Register = () => {
                             </button>
                         </div>
                         <p className="text-xs text-slate-500 mt-2 text-center">
-                            {role === 'user'
-                                ? 'You can browse products, add to cart & place orders'
-                                : 'You get full access to manage products, orders & analytics'}
+                            {role === 'admin' && 'You get full access to manage orders & analytics'}
                         </p>
                     </div>
 

@@ -1,5 +1,8 @@
-import express from 'express';
 import dotenv from 'dotenv';
+// Load environment variables FIRST before any other imports
+dotenv.config();
+
+import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import connectDB from './config/db.js';
@@ -13,9 +16,6 @@ import analyticsRoutes from './routes/analytics.js';
 import activityRoutes from './routes/activity.js';
 import uploadRoutes from './routes/upload.js';
 import userRoutes from './routes/users.js';
-
-// Load environment variables
-dotenv.config();
 
 // Connect to database
 connectDB();
@@ -54,7 +54,7 @@ app.get('/api/test-users', async (req, res) => {
     try {
         const User = (await import('./models/User.js')).default;
         const users = await User.find({}).select('-password');
-        res.json({ 
+        res.json({
             count: users.length,
             users: users.map(u => ({ name: u.name, email: u.email, role: u.role }))
         });

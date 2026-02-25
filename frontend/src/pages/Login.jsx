@@ -54,7 +54,7 @@ const Login = () => {
                         <h1 className="text-4xl font-bold mb-2 gradient-text">
                             Welcome
                         </h1>
-                        <p className="text-slate-600 text-lg">Sign in to your Desi Delights account</p>
+                        <p className="text-slate-600 text-lg">Sign in to your iNet Mart account</p>
                     </div>
 
                     {/* Role selection */}
@@ -66,26 +66,23 @@ const Login = () => {
                             <button
                                 type="button"
                                 onClick={() => setRole('user')}
-                                className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
-                                    role === 'user'
-                                        ? 'border-indigo-500 bg-indigo-50 text-indigo-700 shadow-md'
-                                        : 'border-slate-200 bg-white text-slate-600 hover:border-indigo-300'
-                                }`}
+                                className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${role === 'user'
+                                    ? 'border-indigo-500 bg-indigo-50 text-indigo-700 shadow-md'
+                                    : 'border-slate-200 bg-white text-slate-600 hover:border-indigo-300'
+                                    }`}
                             >
                                 <div className="text-center">
                                     <span className="text-2xl mb-2 block">👤</span>
                                     <p className="text-sm font-semibold">User</p>
-                                    <p className="text-xs mt-1">Browse & Shop</p>
                                 </div>
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setRole('admin')}
-                                className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${
-                                    role === 'admin'
-                                        ? 'border-purple-500 bg-purple-50 text-purple-700 shadow-md'
-                                        : 'border-slate-200 bg-white text-slate-600 hover:border-purple-300'
-                                }`}
+                                className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 ${role === 'admin'
+                                    ? 'border-purple-500 bg-purple-50 text-purple-700 shadow-md'
+                                    : 'border-slate-200 bg-white text-slate-600 hover:border-purple-300'
+                                    }`}
                             >
                                 <div className="text-center">
                                     <span className="text-2xl mb-2 block">🛡️</span>
@@ -178,7 +175,7 @@ const Login = () => {
                             </Link>
                         </p>
                     </div>
-                    
+
                     <div className="mt-4 pt-4 border-t border-slate-200">
                         <p className="text-xs text-slate-500 text-center">
                             By signing in, you agree to our Terms of Service and Privacy Policy

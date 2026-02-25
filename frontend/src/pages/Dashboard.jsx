@@ -79,7 +79,7 @@ const Dashboard = () => {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm font-medium text-slate-600">Total Revenue</p>
-                                <p className="text-3xl font-bold text-slate-800">${analytics.totalRevenue || 0}</p>
+                                <p className="text-3xl font-bold text-slate-800">₹{analytics.totalRevenue || 0}</p>
                             </div>
                             <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
                                 <span className="text-2xl">💰</span>
@@ -109,18 +109,18 @@ const Dashboard = () => {
                                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                                 <XAxis dataKey="date" stroke="#64748b" />
                                 <YAxis stroke="#64748b" />
-                                <Tooltip 
-                                    contentStyle={{ 
-                                        backgroundColor: 'white', 
+                                <Tooltip
+                                    contentStyle={{
+                                        backgroundColor: 'white',
                                         border: '1px solid #e2e8f0',
                                         borderRadius: '8px'
-                                    }} 
+                                    }}
                                 />
                                 <Legend />
-                                <Line 
-                                    type="monotone" 
-                                    dataKey="sales" 
-                                    stroke="#6366f1" 
+                                <Line
+                                    type="monotone"
+                                    dataKey="sales"
+                                    stroke="#6366f1"
                                     strokeWidth={2}
                                     dot={{ fill: '#6366f1', r: 4 }}
                                     activeDot={{ r: 6 }}
@@ -171,13 +171,12 @@ const Dashboard = () => {
                                     <tr key={order._id} className="border-b border-slate-100 hover:bg-slate-50">
                                         <td className="py-3 px-4 text-sm text-slate-800">#{order._id?.slice(-6) || 'N/A'}</td>
                                         <td className="py-3 px-4 text-sm text-slate-800">{order.user?.name || 'N/A'}</td>
-                                        <td className="py-3 px-4 text-sm text-slate-800">${order.totalAmount || 0}</td>
+                                        <td className="py-3 px-4 text-sm text-slate-800">₹{order.totalAmount || 0}</td>
                                         <td className="py-3 px-4">
-                                            <span className={`badge ${
-                                                order.status === 'completed' ? 'badge-success' :
-                                                order.status === 'pending' ? 'badge-warning' :
-                                                'badge-error'
-                                            }`}>
+                                            <span className={`badge ${order.status === 'completed' ? 'badge-success' :
+                                                    order.status === 'pending' ? 'badge-warning' :
+                                                        'badge-error'
+                                                }`}>
                                                 {order.status || 'Unknown'}
                                             </span>
                                         </td>

@@ -1,109 +1,61 @@
 import Product from '../models/Product.js';
 import Order from '../models/Order.js';
 import Activity from '../models/Activity.js';
+import User from '../models/User.js';
 
 // @desc    Get analytics data
 // @route   GET /api/analytics
 // @access  Private
 export const getAnalytics = async (req, res) => {
     try {
-        // Inventory Summary
+        // Counts
         const totalProducts = await Product.countDocuments();
-        const activeProducts = await Product.countDocuments({ status: 'active' });
-        const lowStockProducts = await Product.countDocuments({ stock: { $lte: 10 } });
-        const outOfStockProducts = await Product.countDocuments({ status: 'out-of-stock' });
+        const totalOrders = await Order.countDocuments();
+        const totalUsers = await User.countDocuments();
 
-        // Category Distribution
+        // Total Revenue
+        const revenueResult = await Order.aggregate([
+            { $group: { _id: null, total: { $sum: '$totalAmount' } } }
+        ]);
+        const totalRevenue = revenueResult[0]?.total || 0;
+
+        // Category Distribution for pie chart → { name, value }
         const categoryStats = await Product.aggregate([
-            {
-                $group: {
-                    _id: '$category',
-                    count: { $sum: 1 },
-                    totalValue: { $sum: { $multiply: ['$price', '$stock'] } }
-                }
-            },
+            { $group: { _id: '$category', count: { $sum: 1 } } },
             { $sort: { count: -1 } }
         ]);
+        const categories = categoryStats.map(c => ({ name: c._id || 'Other', value: c.count }));
 
-        // Sales Metrics
-        const totalOrders = await Order.countDocuments();
-        const totalRevenue = await Order.aggregate([
-            {
-                $group: {
-                    _id: null,
-                    total: { $sum: '$totalAmount' }
-                }
-            }
-        ]);
-
-        const ordersByStatus = await Order.aggregate([
-            {
-                $group: {
-                    _id: '$status',
-                    count: { $sum: 1 }
-                }
-            }
-        ]);
-
-        // Top Products by Sales
-        const topProducts = await Order.aggregate([
-            { $unwind: '$items' },
-            {
-                $group: {
-                    _id: '$items.productId',
-                    productName: { $first: '$items.productName' },
-                    totalQuantity: { $sum: '$items.quantity' },
-                    totalRevenue: { $sum: { $multiply: ['$items.price', '$items.quantity'] } }
-                }
-            },
-            { $sort: { totalRevenue: -1 } },
-            { $limit: 5 }
-        ]);
-
-        // Sales Trend (Last 7 days)
+        // Sales Trend (Last 7 days) → { date, sales }
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-        const salesTrend = await Order.aggregate([
-            {
-                $match: {
-                    createdAt: { $gte: sevenDaysAgo }
-                }
-            },
+        const salesTrendRaw = await Order.aggregate([
+            { $match: { createdAt: { $gte: sevenDaysAgo } } },
             {
                 $group: {
-                    _id: {
-                        $dateToString: { format: '%Y-%m-%d', date: '$createdAt' }
-                    },
-                    count: { $sum: 1 },
-                    revenue: { $sum: '$totalAmount' }
+                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+                    sales: { $sum: '$totalAmount' }
                 }
             },
             { $sort: { _id: 1 } }
         ]);
+        const salesTrend = salesTrendRaw.map(s => ({ date: s._id, sales: s.sales }));
 
-        // Recent Activities
-        const recentActivities = await Activity.find()
-            .sort({ timestamp: -1 })
-            .limit(10)
-            .select('-__v');
+        // Recent Orders
+        const recentOrders = await Order.find()
+            .populate('userId', 'name email')
+            .sort({ createdAt: -1 })
+            .limit(5);
 
         res.json({
-            inventory: {
-                totalProducts,
-                activeProducts,
-                lowStockProducts,
-                outOfStockProducts,
-                categoryStats
-            },
-            sales: {
-                totalOrders,
-                totalRevenue: totalRevenue[0]?.total || 0,
-                ordersByStatus,
-                topProducts,
-                salesTrend
-            },
-            recentActivities
+            totalProducts,
+            totalOrders,
+            totalRevenue,
+            totalUsers,
+            categories,
+            salesTrend,
+            recentOrders
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
