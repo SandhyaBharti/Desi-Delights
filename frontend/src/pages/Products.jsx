@@ -18,7 +18,7 @@ const Products = () => {
 
     // Check if user is admin
     const isAdmin = userInfo && userInfo.role === 'admin';
-    
+
     // Debug logging to check admin status
     console.log('=== ADMIN DEBUG ===');
     console.log('Current user info:', userInfo);
@@ -26,7 +26,7 @@ const Products = () => {
     console.log('Is admin check:', isAdmin);
     console.log('Type of userInfo:', typeof userInfo);
     console.log('Type of userInfo.role:', typeof userInfo?.role);
-    
+
     // TEMPORARY: Force admin buttons to show for testing
     const showAdminButtons = isAdmin || true; // FORCE SHOW FOR TESTING
 
@@ -101,7 +101,7 @@ const Products = () => {
                         )}
                     </div>
                 </div>
-                
+
                 {/* Filters */}
                 <div className="card-hover mb-6 sm:mb-8 animate-slide-up">
                     <div className="p-4 sm:p-6">
@@ -133,23 +133,23 @@ const Products = () => {
 
                             <div className="relative">
                                 <span className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm sm:text-base">
-                                    📊
+
                                 </span>
                                 <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="input pl-10 sm:pl-12 appearance-none text-sm sm:text-base py-2 sm:py-3">
-                                    <option value="createdAt">Sort by Date</option>
-                                    <option value="name">Sort by Name</option>
-                                    <option value="price">Sort by Price</option>
-                                    <option value="stock">Sort by Stock</option>
+                                    <option value="createdAt">🗓️Sort by Date</option>
+                                    <option value="name">🔠Sort by Name</option>
+                                    <option value="price">💰Sort by Price</option>
+                                    <option value="stock">📈Sort by Stock</option>
                                 </select>
                             </div>
 
                             <div className="relative">
                                 <span className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm sm:text-base">
-                                    ⬇️
+
                                 </span>
                                 <select value={order} onChange={(e) => setOrder(e.target.value)} className="input pl-10 sm:pl-12 appearance-none text-sm sm:text-base py-2 sm:py-3">
-                                    <option value="desc">Descending</option>
-                                    <option value="asc">Ascending</option>
+                                    <option value="desc">⬇️Descending</option>
+                                    <option value="asc">⬆️Ascending</option>
                                 </select>
                             </div>
                         </div>
@@ -199,7 +199,7 @@ const Products = () => {
                                 )}
                             </div>
 
-                            {/* Product Details */} 
+                            {/* Product Details */}
                             <div className="p-3 sm:p-4">
                                 <div className="mb-2">
                                     <h3 className="text-sm sm:text-lg font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors line-clamp-1 sm:line-clamp-2">
