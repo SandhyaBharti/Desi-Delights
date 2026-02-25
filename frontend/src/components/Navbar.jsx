@@ -59,30 +59,30 @@ const Navbar = () => {
 
     return (
         <nav className="sticky top-0 z-50 glass-morphism border-b border-white/20 shadow-lg">
-            <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+            <div className="max-w-7xl mx-auto px-1 sm:px-2 lg:px-8">
                 <div className="flex items-center justify-between">
                     <Link
                         to={isAdmin ? '/' : '/products'}
-                        className="group flex items-center gap-1 text-base sm:text-lg lg:text-xl font-bold hover:scale-105 transition-all duration-300"
+                        className="group flex items-center gap-1 text-sm sm:text-base lg:text-xl font-bold hover:scale-105 transition-all duration-300"
                     >
                         <div className="relative">
-                            <span className="text-base sm:text-lg lg:text-xl block transform group-hover:rotate-12 transition-transform duration-300">🛒</span>
+                            <span className="text-sm sm:text-base lg:text-xl block transform group-hover:rotate-12 transition-transform duration-300">🛒</span>
                             <div className="absolute -top-1 -right-1 w-2 h-2 bg-indigo-500 rounded-full animate-pulse-soft"></div>
                         </div>
-                        <span className="gradient-text font-extrabold tracking-tight animate-pulse-soft hover:animate-bounce transition-all duration-300 hidden sm:block text-xs sm:text-sm lg:text-base">
+                        <span className="gradient-text font-extrabold tracking-tight animate-pulse-soft hover:animate-bounce transition-all duration-300 hidden sm:block text-[10px] sm:text-xs lg:text-base">
                             iNet Mart
                         </span>
-                        <span className="gradient-text font-extrabold tracking-tight animate-pulse-soft hover:animate-bounce transition-all duration-300 sm:hidden text-sm">
+                        <span className="gradient-text font-extrabold tracking-tight animate-pulse-soft hover:animate-bounce transition-all duration-300 sm:hidden text-xs">
                             iNM
                         </span>
                     </Link>
 
-                    {/* Mobile menu button - Show on mobile and tablet */}
+                    {/* Mobile menu button - Show on mobile and tablet, positioned on right */}
                     <button
                         onClick={() => setShowMobileMenu(!showMobileMenu)}
-                        className="lg:hidden p-1 rounded hover:bg-slate-100 transition-colors"
+                        className="lg:hidden p-1 rounded hover:bg-slate-100 transition-colors bg-slate-50/50"
                     >
-                        <span className="text-xs sm:text-sm">☰</span>
+                        <span className="text-[10px] sm:text-xs">☰</span>
                     </button>
                 </div>
 
