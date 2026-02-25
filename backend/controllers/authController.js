@@ -23,7 +23,7 @@ export const register = async (req, res) => {
 
         // Validate admin secret key if registering as admin
         if (role === 'admin') {
-            if (!adminSecret || adminSecret !== process.env.ADMIN_SECRET_KEY) {
+            if (!adminSecret || adminSecret !== process.env.ADMIN_SECRET) {
                 return res.status(403).json({ message: 'Invalid admin secret key' });
             }
         }
@@ -85,7 +85,7 @@ export const updateRole = async (req, res) => {
     try {
         const { adminSecret } = req.body;
 
-        if (!adminSecret || adminSecret !== process.env.ADMIN_SECRET_KEY) {
+        if (!adminSecret || adminSecret !== process.env.ADMIN_SECRET) {
             return res.status(403).json({ message: 'Invalid admin secret key' });
         }
 

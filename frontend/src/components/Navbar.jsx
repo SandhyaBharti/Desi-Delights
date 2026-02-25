@@ -115,13 +115,15 @@ const Navbar = () => {
                                         </Link>
                                     </>
                                 )}
-                                <Link to="/products" className="nav-link">
-                                    <span className="flex items-center gap-2">
-                                        <span className="text-lg">📦</span>
-                                        <span className="font-semibold hidden md:inline">Products</span>
-                                        <span className="font-semibold md:hidden">📦</span>
-                                    </span>
-                                </Link>
+                                {user && (
+                                    <Link to="/products" className="nav-link">
+                                        <span className="flex items-center gap-2">
+                                            <span className="text-lg">📦</span>
+                                            <span className="font-semibold hidden md:inline">Products</span>
+                                            <span className="font-semibold md:hidden">📦</span>
+                                        </span>
+                                    </Link>
+                                )}
                                 {user && (
                                     <Link to="/orders" className="nav-link">
                                         <span className="flex items-center gap-2">
@@ -131,16 +133,18 @@ const Navbar = () => {
                                         </span>
                                     </Link>
                                 )}
-                                <Link to="/cart" className="relative group">
-                                    <div className="nav-link p-3">
-                                        <span className="text-2xl block group-hover:scale-110 transition-transform">🛒</span>
-                                        {getTotalItems() > 0 && (
-                                            <span className="absolute -top-1 -right-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[20px] text-center shadow-lg animate-bounce-soft">
-                                                {getTotalItems()}
-                                            </span>
-                                        )}
-                                    </div>
-                                </Link>
+                                {user && (
+                                    <Link to="/cart" className="relative group">
+                                        <div className="nav-link p-3">
+                                            <span className="text-2xl block group-hover:scale-110 transition-transform">🛒</span>
+                                            {getTotalItems() > 0 && (
+                                                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[20px] text-center shadow-lg animate-bounce-soft">
+                                                    {getTotalItems()}
+                                                </span>
+                                            )}
+                                        </div>
+                                    </Link>
+                                )}
                             </div>
 
                             {user && (
@@ -154,8 +158,8 @@ const Navbar = () => {
                                                 className="flex items-center gap-3 hover:scale-105 transition-all duration-300"
                                             >
                                                 <div className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all duration-300 ${isAdmin
-                                                        ? 'bg-gradient-to-r from-purple-500/20 to-purple-600/20 text-purple-700 border-purple-300/50'
-                                                        : 'bg-gradient-to-r from-indigo-500/20 to-indigo-600/20 text-indigo-700 border-indigo-300/50'
+                                                    ? 'bg-gradient-to-r from-purple-500/20 to-purple-600/20 text-purple-700 border-purple-300/50'
+                                                    : 'bg-gradient-to-r from-indigo-500/20 to-indigo-600/20 text-indigo-700 border-indigo-300/50'
                                                     }`}>
                                                     {isAdmin ? '🛡️ Admin' : '👤 User'}
                                                 </div>
@@ -292,13 +296,15 @@ const Navbar = () => {
                                 </>
                             )}
 
-                            {/* Common mobile links - Always visible */}
-                            <Link to="/products" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
-                                <span className="flex items-center gap-2">
-                                    <span className="text-lg">📦</span>
-                                    <span className="font-semibold">Products</span>
-                                </span>
-                            </Link>
+                            {/* Common mobile links - Only for logged-in users */}
+                            {user && (
+                                <Link to="/products" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
+                                    <span className="flex items-center gap-2">
+                                        <span className="text-lg">📦</span>
+                                        <span className="font-semibold">Products</span>
+                                    </span>
+                                </Link>
+                            )}
 
                             {/* Orders link - Only for logged-in users */}
                             {user && (
@@ -310,18 +316,20 @@ const Navbar = () => {
                                 </Link>
                             )}
 
-                            {/* Cart link - Always visible */}
-                            <Link to="/cart" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
-                                <span className="flex items-center gap-2">
-                                    <span className="text-lg">🛒</span>
-                                    <span className="font-semibold">Cart</span>
-                                    {getTotalItems() > 0 && (
-                                        <span className="bg-indigo-600 text-white text-xs px-2 py-1 rounded-full">
-                                            {getTotalItems()}
-                                        </span>
-                                    )}
-                                </span>
-                            </Link>
+                            {/* Cart link - Only for logged-in users */}
+                            {user && (
+                                <Link to="/cart" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
+                                    <span className="flex items-center gap-2">
+                                        <span className="text-lg">🛒</span>
+                                        <span className="font-semibold">Cart</span>
+                                        {getTotalItems() > 0 && (
+                                            <span className="bg-indigo-600 text-white text-xs px-2 py-1 rounded-full">
+                                                {getTotalItems()}
+                                            </span>
+                                        )}
+                                    </span>
+                                </Link>
+                            )}
 
                             {user ? (
                                 /* User info and logout */
@@ -329,8 +337,8 @@ const Navbar = () => {
                                     <div className="px-3 py-2">
                                         <div className="flex items-center gap-3">
                                             <div className={`px-3 py-1.5 rounded-full text-xs font-bold border ${isAdmin
-                                                    ? 'bg-gradient-to-r from-purple-500/20 to-purple-600/20 text-purple-700 border-purple-300/50'
-                                                    : 'bg-gradient-to-r from-indigo-500/20 to-indigo-600/20 text-indigo-700 border-indigo-300/50'
+                                                ? 'bg-gradient-to-r from-purple-500/20 to-purple-600/20 text-purple-700 border-purple-300/50'
+                                                : 'bg-gradient-to-r from-indigo-500/20 to-indigo-600/20 text-indigo-700 border-indigo-300/50'
                                                 }`}>
                                                 {isAdmin ? '🛡️ Admin' : '👤 User'}
                                             </div>
