@@ -60,28 +60,31 @@ const Navbar = () => {
     return (
         <nav className="sticky top-0 z-50 glass-morphism border-b border-white/20 shadow-lg">
             <div className="max-w-7xl mx-auto px-0.5 sm:px-1 lg:px-8">
-                <div className="flex items-center justify-end">
-                    {/* Mobile menu button - Show on mobile and tablet, positioned on right */}
+                <div className="flex items-center justify-between">
+                    {/* Logo - Left side, always visible */}
+                    <Link
+                        to={isAdmin ? '/' : '/products'}
+                        className="group flex items-center gap-1 text-sm sm:text-base lg:text-xl font-bold hover:scale-105 transition-all duration-300"
+                    >
+                        <div className="relative">
+                            <span className="text-sm sm:text-base lg:text-xl block transform group-hover:rotate-12 transition-transform duration-300">🛒</span>
+                            <div className="absolute -top-1 -right-1 w-2 h-2 bg-indigo-500 rounded-full animate-pulse-soft"></div>
+                        </div>
+                        <span className="gradient-text font-extrabold tracking-tight animate-pulse-soft hover:animate-bounce transition-all duration-300 hidden sm:block text-[8px] sm:text-xs lg:text-base">
+                            iNet Mart
+                        </span>
+                        <span className="gradient-text font-extrabold tracking-tight animate-pulse-soft hover:animate-bounce transition-all duration-300 sm:hidden text-xs">
+                            iNM
+                        </span>
+                    </Link>
+
+                    {/* Mobile menu button - Right side, only on mobile and tablet */}
                     <button
                         onClick={() => setShowMobileMenu(!showMobileMenu)}
                         className="lg:hidden p-1 rounded hover:bg-slate-100 transition-colors bg-slate-50/50"
                     >
                         <span className="text-[10px] sm:text-xs">☰</span>
                     </button>
-
-                    {/* Logo - Only show on desktop, hide on mobile and tablet */}
-                    <Link
-                        to={isAdmin ? '/' : '/products'}
-                        className="group flex items-center gap-1 text-sm sm:text-base lg:text-xl font-bold hover:scale-105 transition-all duration-300 hidden lg:flex"
-                    >
-                        <div className="relative">
-                            <span className="text-sm sm:text-base lg:text-xl block transform group-hover:rotate-12 transition-transform duration-300">🛒</span>
-                            <div className="absolute -top-1 -right-1 w-2 h-2 bg-indigo-500 rounded-full animate-pulse-soft"></div>
-                        </div>
-                        <span className="gradient-text font-extrabold tracking-tight animate-pulse-soft hover:animate-bounce transition-all duration-300 text-[8px] sm:text-xs lg:text-base">
-                            iNet Mart
-                        </span>
-                    </Link>
                 </div>
 
                 {/* Desktop Navigation - Only on large screens */}
