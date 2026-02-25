@@ -269,6 +269,7 @@ const Navbar = () => {
                         </div>
                     )}
                 </div>
+                </div>
 
                 {/* Mobile Menu - Always Available */}
                 {showMobileMenu && (
