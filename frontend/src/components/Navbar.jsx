@@ -295,7 +295,7 @@ const Navbar = () => {
                             {/* Common mobile links - Always visible */}
                             <Link to="/products" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
                                 <span className="flex items-center gap-2">
-                                    <span className="text-lg"></span>
+                                    <span className="text-lg">📦</span>
                                     <span className="font-semibold">Products</span>
                                 </span>
                             </Link>
@@ -304,7 +304,7 @@ const Navbar = () => {
                             {user && (
                                 <Link to="/orders" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
                                     <span className="flex items-center gap-2">
-                                        <span className="text-lg"></span>
+                                        <span className="text-lg">📋</span>
                                         <span className="font-semibold">Orders</span>
                                     </span>
                                 </Link>
@@ -313,7 +313,7 @@ const Navbar = () => {
                             {/* Cart link - Always visible */}
                             <Link to="/cart" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
                                 <span className="flex items-center gap-2">
-                                    <span className="text-lg"></span>
+                                    <span className="text-lg">🛒</span>
                                     <span className="font-semibold">Cart</span>
                                     {getTotalItems() > 0 && (
                                         <span className="bg-indigo-600 text-white text-xs px-2 py-1 rounded-full">
