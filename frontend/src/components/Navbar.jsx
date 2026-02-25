@@ -91,6 +91,20 @@ const Navbar = () => {
                 <div className="hidden lg:flex items-center justify-between">
                     {/* Desktop nav links */}
                     <div className="flex items-center gap-4">
+                        {/* Logo - Integrated with navigation */}
+                        <Link
+                            to={isAdmin ? '/' : '/products'}
+                            className="group flex items-center gap-1 text-sm sm:text-base lg:text-xl font-bold hover:scale-105 transition-all duration-300"
+                        >
+                            <div className="relative">
+                                <span className="text-sm sm:text-base lg:text-xl block transform group-hover:rotate-12 transition-transform duration-300">🛒</span>
+                                <div className="absolute -top-1 -right-1 w-2 h-2 bg-indigo-500 rounded-full animate-pulse-soft"></div>
+                            </div>
+                            <span className="gradient-text font-extrabold tracking-tight animate-pulse-soft hover:animate-bounce transition-all duration-300 text-[8px] sm:text-xs lg:text-base">
+                                iNet Mart
+                            </span>
+                        </Link>
+
                         {/* Common nav links - Always visible */}
                         <div className="flex items-center gap-2">
                             {user && isAdmin && (
