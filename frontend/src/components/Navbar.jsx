@@ -90,12 +90,42 @@ const Navbar = () => {
                         <div className="hidden md:flex items-center gap-4 sm:gap-6">
                             {/* Common nav links - Always visible */}
                             <div className="flex items-center gap-2">
+                                {user && isAdmin && (
+                                    <>
+                                        <Link to="/" className="nav-link">
+                                            <span className="flex items-center gap-2">
+                                                <span className="text-lg">�</span>
+                                                <span className="font-semibold">Dashboard</span>
+                                            </span>
+                                        </Link>
+                                        <Link to="/users" className="nav-link">
+                                            <span className="flex items-center gap-2">
+                                                <span className="text-lg">�</span>
+                                                <span className="font-semibold">Users</span>
+                                            </span>
+                                        </Link>
+                                        <Link to="/activity" className="nav-link">
+                                            <span className="flex items-center gap-2">
+                                                <span className="text-lg">📋</span>
+                                                <span className="font-semibold">Activity</span>
+                                            </span>
+                                        </Link>
+                                    </>
+                                )}
                                 <Link to="/products" className="nav-link">
                                     <span className="flex items-center gap-2">
-                                        <span className="text-lg">📦</span>
+                                        <span className="text-lg">�</span>
                                         <span className="font-semibold">Products</span>
                                     </span>
                                 </Link>
+                                {user && (
+                                    <Link to="/orders" className="nav-link">
+                                        <span className="flex items-center gap-2">
+                                            <span className="text-lg">📋</span>
+                                            <span className="font-semibold">Orders</span>
+                                        </span>
+                                    </Link>
+                                )}
                                 <Link to="/cart" className="relative group">
                                     <div className="nav-link p-3">
                                         <span className="text-2xl block group-hover:scale-110 transition-transform">🛒</span>
@@ -110,40 +140,6 @@ const Navbar = () => {
 
                             {user && (
                                 <>
-                                    {/* Admin-only nav links */}
-                                    {isAdmin && (
-                                        <div className="hidden md:flex items-center gap-2">
-                                            <Link to="/" className="nav-link">
-                                                <span className="flex items-center gap-2">
-                                                    <span className="text-lg">📊</span>
-                                                    <span className="font-semibold hidden lg:inline">Dashboard</span>
-                                                </span>
-                                            </Link>
-                                            <Link to="/users" className="nav-link">
-                                                <span className="flex items-center gap-2">
-                                                    <span className="text-lg">👥</span>
-                                                    <span className="font-semibold hidden lg:inline">Users</span>
-                                                </span>
-                                            </Link>
-                                            <Link to="/activity" className="nav-link">
-                                                <span className="flex items-center gap-2">
-                                                    <span className="text-lg">📋</span>
-                                                    <span className="font-semibold hidden lg:inline">Activity</span>
-                                                </span>
-                                            </Link>
-                                        </div>
-                                    )}
-
-                                    {/* Additional user links */}
-                                    <div className="hidden lg:flex items-center gap-2">
-                                        <Link to="/orders" className="nav-link">
-                                            <span className="flex items-center gap-2">
-                                                <span className="text-lg">📋</span>
-                                                <span className="font-semibold">Orders</span>
-                                            </span>
-                                        </Link>
-                                    </div>
-
                                     {/* User section with dropdown */}
                                     <div className="flex items-center gap-4 pl-6 border-l border-slate-200">
                                         {/* User profile dropdown */}
@@ -265,16 +261,52 @@ const Navbar = () => {
                 {showMobileMenu && (
                     <div className="md:hidden border-t border-slate-200 glass-morphism" ref={mobileMenuRef}>
                         <div className="px-4 py-3 space-y-2">
+                            {/* Admin-only mobile links - First in order */}
+                            {user && isAdmin && (
+                                <>
+                                    <Link to="/" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
+                                        <span className="flex items-center gap-2">
+                                            <span className="text-lg">�</span>
+                                            <span className="font-semibold">Dashboard</span>
+                                        </span>
+                                    </Link>
+                                    <Link to="/users" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
+                                        <span className="flex items-center gap-2">
+                                            <span className="text-lg">�</span>
+                                            <span className="font-semibold">Users</span>
+                                        </span>
+                                    </Link>
+                                    <Link to="/activity" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
+                                        <span className="flex items-center gap-2">
+                                            <span className="text-lg">📋</span>
+                                            <span className="font-semibold">Activity</span>
+                                        </span>
+                                    </Link>
+                                </>
+                            )}
+
                             {/* Common mobile links - Always visible */}
                             <Link to="/products" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
                                 <span className="flex items-center gap-2">
-                                    <span className="text-lg">📦</span>
+                                    <span className="text-lg">�</span>
                                     <span className="font-semibold">Products</span>
                                 </span>
                             </Link>
+
+                            {/* Orders link - Only for logged-in users */}
+                            {user && (
+                                <Link to="/orders" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
+                                    <span className="flex items-center gap-2">
+                                        <span className="text-lg">�</span>
+                                        <span className="font-semibold">Orders</span>
+                                    </span>
+                                </Link>
+                            )}
+
+                            {/* Cart link - Always visible */}
                             <Link to="/cart" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
                                 <span className="flex items-center gap-2">
-                                    <span className="text-lg">🛒</span>
+                                    <span className="text-lg">�</span>
                                     <span className="font-semibold">Cart</span>
                                     {getTotalItems() > 0 && (
                                         <span className="bg-indigo-600 text-white text-xs px-2 py-1 rounded-full">
@@ -285,72 +317,38 @@ const Navbar = () => {
                             </Link>
 
                             {user ? (
-                                <>
-                                    {/* Admin-only mobile links */}
-                                    {isAdmin && (
-                                        <>
-                                            <Link to="/" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
-                                                <span className="flex items-center gap-2">
-                                                    <span className="text-lg">📊</span>
-                                                    <span className="font-semibold">Dashboard</span>
-                                                </span>
-                                            </Link>
-                                            <Link to="/users" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
-                                                <span className="flex items-center gap-2">
-                                                    <span className="text-lg">👥</span>
-                                                    <span className="font-semibold">Users</span>
-                                                </span>
-                                            </Link>
-                                            <Link to="/activity" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
-                                                <span className="flex items-center gap-2">
-                                                    <span className="text-lg">📋</span>
-                                                    <span className="font-semibold">Activity</span>
-                                                </span>
-                                            </Link>
-                                        </>
-                                    )}
-
-                                    {/* Additional user mobile links */}
-                                    <Link to="/orders" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
-                                        <span className="flex items-center gap-2">
-                                            <span className="text-lg">📋</span>
-                                            <span className="font-semibold">Orders</span>
-                                        </span>
-                                    </Link>
-
-                                    {/* User info and logout */}
-                                    <div className="border-t border-slate-200 pt-2 mt-2">
-                                        <div className="px-3 py-2">
-                                            <div className="flex items-center gap-3">
-                                                <div className={`px-3 py-1.5 rounded-full text-xs font-bold border ${isAdmin
-                                                        ? 'bg-gradient-to-r from-purple-500/20 to-purple-600/20 text-purple-700 border-purple-300/50'
-                                                        : 'bg-gradient-to-r from-indigo-500/20 to-indigo-600/20 text-indigo-700 border-indigo-300/50'
-                                                    }`}>
-                                                    {isAdmin ? '🛡️ Admin' : '👤 User'}
-                                                </div>
-                                                <div>
-                                                    <p className="text-slate-800 font-bold text-sm">{user.name}</p>
-                                                    <p className="text-slate-600 text-xs">{user.email}</p>
-                                                </div>
+                                /* User info and logout */
+                                <div className="border-t border-slate-200 pt-2 mt-2">
+                                    <div className="px-3 py-2">
+                                        <div className="flex items-center gap-3">
+                                            <div className={`px-3 py-1.5 rounded-full text-xs font-bold border ${isAdmin
+                                                    ? 'bg-gradient-to-r from-purple-500/20 to-purple-600/20 text-purple-700 border-purple-300/50'
+                                                    : 'bg-gradient-to-r from-indigo-500/20 to-indigo-600/20 text-indigo-700 border-indigo-300/50'
+                                                }`}>
+                                                {isAdmin ? '🛡️ Admin' : '👤 User'}
+                                            </div>
+                                            <div>
+                                                <p className="text-slate-800 font-bold text-sm">{user.name}</p>
+                                                <p className="text-slate-600 text-xs">{user.email}</p>
                                             </div>
                                         </div>
-                                        <button
-                                            onClick={handleLogout}
-                                            className="block w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors text-red-600 font-semibold"
-                                        >
-                                            <span className="flex items-center gap-2">
-                                                <span>➜</span>
-                                                <span>Logout</span>
-                                            </span>
-                                        </button>
                                     </div>
-                                </>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="block w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors text-red-600 font-semibold"
+                                    >
+                                        <span className="flex items-center gap-2">
+                                            <span>➜</span>
+                                            <span>Logout</span>
+                                        </span>
+                                    </button>
+                                </div>
                             ) : (
                                 /* Auth buttons for non-logged in users */
                                 <div className="border-t border-slate-200 pt-2 mt-2 space-y-2">
                                     <Link to="/login" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
                                         <span className="flex items-center gap-2">
-                                            <span className="text-lg">�</span>
+                                            <span className="text-lg">🔑</span>
                                             <span className="font-semibold">Login</span>
                                         </span>
                                     </Link>
