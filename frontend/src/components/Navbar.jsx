@@ -110,17 +110,17 @@ const Navbar = () => {
                         <div className="flex items-center gap-2">
                             {user && isAdmin && (
                                 <>
-                                    <Link to="/users" className="nav-link">
+                                    <Link to="/" className="nav-link">
                                         <span className="flex items-center gap-2">
-                                            <span className="text-base lg:text-lg">👥</span>
-                                            <span className="font-semibold text-sm lg:text-base">Users</span>
+                                            <span className="text-base lg:text-lg">�</span>
+                                            <span className="font-semibold text-sm lg:text-base">Dashboard</span>
                                         </span>
                                     </Link>
 
-                                    <Link to="/" className="nav-link">
+                                    <Link to="/users" className="nav-link">
                                         <span className="flex items-center gap-2">
-                                            <span className="text-base lg:text-lg">📊</span>
-                                            <span className="font-semibold text-sm lg:text-base">Dashboard</span>
+                                            <span className="text-base lg:text-lg">�</span>
+                                            <span className="font-semibold text-sm lg:text-base">Users</span>
                                         </span>
                                     </Link>
 
@@ -278,17 +278,17 @@ const Navbar = () => {
                             {/* Admin-only mobile links - First in order */}
                             {user && isAdmin && (
                                 <>
-                                    <Link to="/users" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
+                                    <Link to="/" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
                                         <span className="flex items-center gap-2">
-                                            <span className="text-sm">👥</span>
-                                            <span className="font-semibold text-xs">Users</span>
+                                            <span className="text-sm">�</span>
+                                            <span className="font-semibold text-xs">Dashboard</span>
                                         </span>
                                     </Link>
 
-                                    <Link to="/" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
+                                    <Link to="/users" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
                                         <span className="flex items-center gap-2">
-                                            <span className="text-sm">📊</span>
-                                            <span className="font-semibold text-xs">Dashboard</span>
+                                            <span className="text-sm">�</span>
+                                            <span className="font-semibold text-xs">Users</span>
                                         </span>
                                     </Link>
 
