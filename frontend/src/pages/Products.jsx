@@ -86,44 +86,45 @@ const Products = () => {
         <div className="min-h-screen py-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div className="flex items-center justify-between mb-8 animate-fade-in">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 animate-fade-in gap-4">
                     <div>
-                        <h1 className="text-5xl font-bold mb-2 gradient-text">Products</h1>
-                        <p className="text-slate-600 text-lg">Discover amazing items in our collection</p>
+                        <h1 className="text-3xl sm:text-5xl font-bold mb-2 gradient-text">Products</h1>
+                        <p className="text-slate-600 text-sm sm:text-lg">Discover amazing items in our collection</p>
                     </div>
                     <div className="flex gap-2">
                         {showAdminButtons && (
-                            <Link to="/products/new" className="btn btn-primary shadow-lg hover:shadow-xl">
-                                <span className="text-lg">➕</span>
-                                Add Product
+                            <Link to="/products/new" className="btn btn-primary shadow-lg hover:shadow-xl text-sm sm:text-base py-2 sm:py-3 px-3 sm:px-6">
+                                <span className="text-sm sm:text-lg">➕</span>
+                                <span className="hidden sm:inline ml-2">Add Product</span>
+                                <span className="sm:hidden ml-1">Add</span>
                             </Link>
                         )}
                     </div>
                 </div>
                 
                 {/* Filters */}
-                <div className="card-hover mb-8 animate-slide-up">
-                    <div className="p-6">
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="card-hover mb-6 sm:mb-8 animate-slide-up">
+                    <div className="p-4 sm:p-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                             <div className="relative">
-                                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400">
-
+                                <span className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm sm:text-base">
+                                    🔎
                                 </span>
                                 <input
                                     type="text"
-                                    placeholder="🔎 Search products..."
+                                    placeholder="Search products..."
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
-                                    className="input pl-12 appearance-none"
+                                    className="input pl-10 sm:pl-12 appearance-none text-sm sm:text-base py-2 sm:py-3"
                                 />
                             </div>
 
                             <div className="relative">
-                                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400">
-
+                                <span className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm sm:text-base">
+                                    🛍️
                                 </span>
-                                <select value={category} onChange={(e) => setCategory(e.target.value)} className="input pl-12 appearance-none">
-                                    <option value="">🛍️ All Categories</option>
+                                <select value={category} onChange={(e) => setCategory(e.target.value)} className="input pl-10 sm:pl-12 appearance-none text-sm sm:text-base py-2 sm:py-3">
+                                    <option value="">All Categories</option>
                                     {categories.map(cat => (
                                         <option key={cat} value={cat}>{cat}</option>
                                     ))}
@@ -131,11 +132,11 @@ const Products = () => {
                             </div>
 
                             <div className="relative">
-                                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400">
-
+                                <span className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm sm:text-base">
+                                    📊
                                 </span>
-                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="input pl-12 appearance-none">
-                                    <option value="createdAt">🗓️ Sort by Date</option>
+                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="input pl-10 sm:pl-12 appearance-none text-sm sm:text-base py-2 sm:py-3">
+                                    <option value="createdAt">Sort by Date</option>
                                     <option value="name">Sort by Name</option>
                                     <option value="price">Sort by Price</option>
                                     <option value="stock">Sort by Stock</option>
@@ -143,12 +144,12 @@ const Products = () => {
                             </div>
 
                             <div className="relative">
-                                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400">
-
+                                <span className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm sm:text-base">
+                                    ⬇️
                                 </span>
-                                <select value={order} onChange={(e) => setOrder(e.target.value)} className="input pl-12 appearance-none">
-                                    <option value="desc">⬇️ Descending</option>
-                                    <option value="asc">⬆️ Ascending</option>
+                                <select value={order} onChange={(e) => setOrder(e.target.value)} className="input pl-10 sm:pl-12 appearance-none text-sm sm:text-base py-2 sm:py-3">
+                                    <option value="desc">Descending</option>
+                                    <option value="asc">Ascending</option>
                                 </select>
                             </div>
                         </div>
@@ -156,7 +157,7 @@ const Products = () => {
                 </div>
 
                 {/* Products Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fade-in">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 animate-fade-in">
                     {products.map((product, index) => (
                         <div
                             key={product._id}
@@ -164,7 +165,7 @@ const Products = () => {
                             style={{ animationDelay: `${index * 100}ms` }}
                         >
                             {/* Product Image */}
-                            <div className="relative mb-4 h-48 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl overflow-hidden">
+                            <div className="relative mb-3 sm:mb-4 h-40 sm:h-48 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl overflow-hidden">
                                 {product.imageUrl ? (
                                     <img
                                         src={getImageUrl(product.imageUrl)}
@@ -180,7 +181,7 @@ const Products = () => {
                                     />
                                 ) : (
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <span className="text-6xl opacity-50">
+                                        <span className="text-4xl sm:text-6xl opacity-50">
                                             {product.category === 'Electronics' && '📱'}
                                             {product.category === 'Clothing' && '👕'}
                                             {product.category === 'Food' && '🍔'}
@@ -193,57 +194,58 @@ const Products = () => {
                                 )}
                                 {product.stock < 10 && (
                                     <div className="absolute top-2 right-2">
-                                        <span className="badge badge-warning">Low Stock</span>
+                                        <span className="badge badge-warning text-xs sm:text-sm">Low Stock</span>
                                     </div>
                                 )}
                             </div>
 
                             {/* Product Details */} 
-                            <div className="p-4">
+                            <div className="p-3 sm:p-4">
                                 <div className="mb-2">
-                                    <h3 className="text-lg font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors">
+                                    <h3 className="text-sm sm:text-lg font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors line-clamp-1 sm:line-clamp-2">
                                         {product.name}
                                     </h3>
-                                    <p className="text-sm text-slate-500">{product.category}</p>
+                                    <p className="text-xs sm:text-sm text-slate-500">{product.category}</p>
                                 </div>
 
-                                <div className="flex items-center justify-between mb-3">
-                                    <span className="text-2xl font-bold text-indigo-600">
+                                <div className="flex items-center justify-between mb-2 sm:mb-3">
+                                    <span className="text-lg sm:text-2xl font-bold text-indigo-600">
                                         ₹{product.price}
                                     </span>
-                                    <span className="text-sm text-slate-500">
+                                    <span className="text-xs sm:text-sm text-slate-500">
                                         {product.stock} in stock
                                     </span>
                                 </div>
 
-                                <p className="text-sm text-slate-600 mb-4 line-clamp-2">
+                                <p className="text-xs sm:text-sm text-slate-600 mb-3 sm:mb-4 line-clamp-2">
                                     {product.description}
                                 </p>
 
-                                <div className="flex gap-2">
+                                <div className="flex flex-col sm:flex-row gap-2">
                                     <button
                                         onClick={() => handleAddToCart(product)}
-                                        className="btn btn-primary flex-1"
+                                        className="btn btn-primary flex-1 text-xs sm:text-sm py-2 sm:py-3"
                                         disabled={product.stock === 0}
                                     >
-                                        <span>🛒</span>
-                                        Add to Cart
+                                        <span className="text-sm sm:text-base">🛒</span>
+                                        <span className="hidden sm:inline">Add to Cart</span>
+                                        <span className="sm:hidden">Cart</span>
                                     </button>
                                     {showAdminButtons && (
-                                        <Link
-                                            to={`/products/edit/${product._id}`}
-                                            className="btn btn-outline"
-                                        >
-                                            <span>✏️</span>
-                                        </Link>
-                                    )}
-                                    {showAdminButtons && (
-                                        <button
-                                            onClick={() => handleDelete(product._id)}
-                                            className="btn btn-danger"
-                                        >
-                                            <span>🗑️</span>
-                                        </button>
+                                        <div className="flex gap-1 sm:gap-2">
+                                            <Link
+                                                to={`/products/edit/${product._id}`}
+                                                className="btn btn-outline text-xs sm:text-sm px-2 sm:px-3 py-2 sm:py-3"
+                                            >
+                                                <span className="text-sm sm:text-base">✏️</span>
+                                            </Link>
+                                            <button
+                                                onClick={() => handleDelete(product._id)}
+                                                className="btn btn-danger text-xs sm:text-sm px-2 sm:px-3 py-2 sm:py-3"
+                                            >
+                                                <span className="text-sm sm:text-base">🗑️</span>
+                                            </button>
+                                        </div>
                                     )}
                                 </div>
                             </div>
