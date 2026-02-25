@@ -77,68 +77,66 @@ const Navbar = () => {
                         </span>
                     </Link>
 
-                    <div className="flex items-center gap-4 sm:gap-6">
+                    <div className="flex items-center gap-2 sm:gap-4 lg:gap-6">
                         {/* Mobile menu button - Show on mobile and tablet */}
                         <button
                             onClick={() => setShowMobileMenu(!showMobileMenu)}
-                            className="lg:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                            className="lg:hidden p-1.5 sm:p-2 rounded-lg hover:bg-slate-100 transition-colors"
                         >
-                            <span className="text-xl sm:text-2xl">☰</span>
+                            <span className="text-lg sm:text-xl lg:text-2xl">☰</span>
                         </button>
 
                         {/* Desktop nav links only */}
-                        <div className="hidden lg:flex items-center gap-4 sm:gap-6">
+                        <div className="hidden lg:flex items-center gap-2 sm:gap-4 lg:gap-6">
                             {/* Common nav links - Always visible */}
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1 sm:gap-2">
                                 {user && isAdmin && (
                                     <>
                                         <Link to="/" className="nav-link">
-                                            <span className="flex items-center gap-2">
-                                                <span className="text-lg">📊</span>
-                                                <span className="font-semibold hidden md:inline">Dashboard</span>
-                                                <span className="font-semibold md:hidden">📊</span>
+                                            <span className="flex items-center gap-1 sm:gap-2">
+                                                <span className="text-sm sm:text-base lg:text-lg">📊</span>
+                                                <span className="font-semibold hidden md:inline text-xs sm:text-sm lg:text-base">Dashboard</span>
+                                                <span className="font-semibold md:hidden text-xs sm:text-sm">📊</span>
                                             </span>
                                         </Link>
 
                                         <Link to="/activity" className="nav-link">
-                                            <span className="flex items-center gap-2">
-                                                <span className="text-lg">📋</span>
-                                                <span className="font-semibold hidden md:inline">Activity</span>
-                                                <span className="font-semibold md:hidden">📋</span>
+                                            <span className="flex items-center gap-1 sm:gap-2">
+                                                <span className="text-sm sm:text-base lg:text-lg">📋</span>
+                                                <span className="font-semibold hidden md:inline text-xs sm:text-sm lg:text-base">Activity</span>
+                                                <span className="font-semibold md:hidden text-xs sm:text-sm">📋</span>
                                             </span>
                                         </Link>
                                     </>
                                 )}
                                 {user && (
                                     <Link to="/products" className="nav-link">
-                                        <span className="flex items-center gap-2">
-                                            <span className="text-lg">📦</span>
-                                            <span className="font-semibold hidden md:inline">Products</span>
-                                            <span className="font-semibold md:hidden">📦</span>
+                                        <span className="flex items-center gap-1 sm:gap-2">
+                                            <span className="text-sm sm:text-base lg:text-lg">📦</span>
+                                            <span className="font-semibold hidden md:inline text-xs sm:text-sm lg:text-base">Products</span>
+                                            <span className="font-semibold md:hidden text-xs sm:text-sm">📦</span>
                                         </span>
                                     </Link>
                                 )}
                                 {user && (
                                     <Link to="/orders" className="nav-link">
-                                        <span className="flex items-center gap-2">
-                                            <span className="text-lg">📋</span>
-                                            <span className="font-semibold hidden md:inline">Orders</span>
-                                            <span className="font-semibold md:hidden">📋</span>
+                                        <span className="flex items-center gap-1 sm:gap-2">
+                                            <span className="text-sm sm:text-base lg:text-lg">📋</span>
+                                            <span className="font-semibold hidden md:inline text-xs sm:text-sm lg:text-base">Orders</span>
+                                            <span className="font-semibold md:hidden text-xs sm:text-sm">📋</span>
                                         </span>
                                     </Link>
                                 )}
-                                {user && (
-                                    <Link to="/cart" className="relative group">
-                                        <div className="nav-link p-3">
-                                            <span className="text-2xl block group-hover:scale-110 transition-transform">🛒</span>
-                                            {getTotalItems() > 0 && (
-                                                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[20px] text-center shadow-lg animate-bounce-soft">
-                                                    {getTotalItems()}
-                                                </span>
-                                            )}
-                                        </div>
-                                    </Link>
-                                )}
+                                <Link to="/cart" className="relative group">
+                                    <div className="nav-link p-2 sm:p-3">
+                                        <span className="text-lg sm:text-xl lg:text-2xl block group-hover:scale-110 transition-transform">🛒</span>
+                                        {getTotalItems() > 0 && (
+                                            <span className="absolute -top-1 -right-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[20px] text-center shadow-lg animate-bounce-soft">
+                                                {getTotalItems()}
+                                            </span>
+                                        )}
+                                    </div>
+                                </Link>
                             </div>
 
                             {user && (

@@ -41,55 +41,55 @@ const Cart = () => {
     };
 
     return (
-        <div className="min-h-screen py-8">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="mb-8 animate-fade-in">
-                    <h1 className="text-5xl font-bold mb-2 gradient-text">Shopping Cart</h1>
-                    <p className="text-slate-400 text-lg">Review your items and checkout</p>
+        <div className="min-h-screen py-6 sm:py-8">
+            <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+                <div className="mb-4 sm:mb-6 lg:mb-8 animate-fade-in">
+                    <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-1 sm:mb-2 gradient-text">Shopping Cart</h1>
+                    <p className="text-slate-400 text-xs sm:text-sm lg:text-lg">Review your items and checkout</p>
                 </div>
 
                 {cartItems.length === 0 ? (
-                    <div className="card text-center py-12 animate-fade-in">
-                        <p className="text-xl text-slate-400 mb-4">Your cart is empty</p>
-                        <button onClick={() => navigate('/products')} className="btn btn-primary">
+                    <div className="card text-center py-6 sm:py-8 lg:py-12 animate-fade-in">
+                        <p className="text-sm sm:text-base lg:text-xl text-slate-400 mb-2 sm:mb-4">Your cart is empty</p>
+                        <button onClick={() => navigate('/products')} className="btn btn-primary text-xs sm:text-sm lg:text-base py-2 sm:py-3">
                             Browse Products
                         </button>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                         {/* Cart Items */}
-                        <div className="lg:col-span-2 space-y-4 animate-fade-in">
+                        <div className="lg:col-span-2 space-y-2 sm:space-y-4 animate-fade-in">
                             {cartItems.map((item) => (
-                                <div key={item._id} className="card">
-                                    <div className="flex items-start gap-4">
+                                <div key={item._id} className="card p-3 sm:p-4 lg:p-6">
+                                    <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
                                         <div className="flex-1">
-                                            <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
-                                            <p className="text-slate-400 text-sm mb-2">{item.category}</p>
-                                            <p className="text-2xl font-bold text-green-400">₹{item.price}</p>
+                                            <h3 className="text-sm sm:text-base lg:text-lg font-semibold mb-1 line-clamp-1">{item.name}</h3>
+                                            <p className="text-slate-400 text-[10px] sm:text-sm mb-2">{item.category}</p>
+                                            <p className="text-base sm:text-lg lg:text-2xl font-bold text-green-400">₹{item.price}</p>
                                         </div>
 
                                         <div className="flex items-center gap-2">
                                             <button
                                                 onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                                                className="w-8 h-8 rounded bg-slate-700 hover:bg-slate-600 transition-colors"
+                                                className="w-6 h-6 sm:w-8 sm:h-8 rounded bg-slate-700 hover:bg-slate-600 transition-colors text-[10px] sm:text-sm"
                                             >
                                                 -
                                             </button>
-                                            <span className="w-12 text-center font-semibold">{item.quantity}</span>
+                                            <span className="w-8 sm:w-12 text-center font-semibold text-xs sm:text-sm">{item.quantity}</span>
                                             <button
                                                 onClick={() => updateQuantity(item._id, item.quantity + 1)}
                                                 disabled={item.quantity >= item.stock}
-                                                className="w-8 h-8 rounded bg-slate-700 hover:bg-slate-600 transition-colors disabled:opacity-50"
+                                                className="w-6 h-6 sm:w-8 sm:h-8 rounded bg-slate-700 hover:bg-slate-600 transition-colors disabled:opacity-50 text-[10px] sm:text-sm"
                                             >
                                                 +
                                             </button>
                                         </div>
 
                                         <div className="text-right">
-                                            <p className="text-xl font-bold mb-2">₹{(item.price * item.quantity).toFixed(2)}</p>
+                                            <p className="text-sm sm:text-base lg:text-xl font-bold mb-2">₹{(item.price * item.quantity).toFixed(2)}</p>
                                             <button
                                                 onClick={() => removeFromCart(item._id)}
-                                                className="text-red-400 hover:text-red-300 text-sm"
+                                                className="text-red-400 hover:text-red-300 text-[10px] sm:text-sm"
                                             >
                                                 Remove
                                             </button>
@@ -101,15 +101,15 @@ const Cart = () => {
 
                         {/* Checkout Form */}
                         <div className="animate-fade-in">
-                            <div className="card sticky top-24">
-                                <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
+                            <div className="card sticky top-20 sm:top-24 p-3 sm:p-4 lg:p-6">
+                                <h3 className="text-sm sm:text-base lg:text-xl font-semibold mb-2 sm:mb-4">Order Summary</h3>
 
-                                <div className="border-t border-slate-700 pt-4 mb-6">
+                                <div className="border-t border-slate-700 pt-2 sm:pt-4 mb-3 sm:mb-6">
                                     <div className="flex justify-between mb-2">
-                                        <span className="text-slate-400">Items ({cartItems.length})</span>
-                                        <span>₹{getTotalPrice().toFixed(2)}</span>
+                                        <span className="text-slate-400 text-[10px] sm:text-sm">Items ({cartItems.length})</span>
+                                        <span className="text-xs sm:text-sm">₹{getTotalPrice().toFixed(2)}</span>
                                     </div>
-                                    <div className="flex justify-between text-xl font-bold border-t border-slate-700 pt-2">
+                                    <div className="flex justify-between text-sm sm:text-base lg:text-xl font-bold border-t border-slate-700 pt-2">
                                         <span>Total</span>
                                         <span className="text-green-400">₹{getTotalPrice().toFixed(2)}</span>
                                     </div>
@@ -117,43 +117,43 @@ const Cart = () => {
 
                                 <ErrorMessage message={error} />
 
-                                <form onSubmit={handleCheckout} className="space-y-4">
+                                <form onSubmit={handleCheckout} className="space-y-2 sm:space-y-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-300 mb-2">Your Name</label>
+                                        <label className="block text-[10px] sm:text-xs lg:text-sm font-medium text-slate-300 mb-1 sm:mb-2">Your Name</label>
                                         <input
                                             type="text"
                                             value={customerName}
                                             onChange={(e) => setCustomerName(e.target.value)}
                                             placeholder="John Doe"
-                                            className="input"
+                                            className="input text-xs sm:text-sm lg:text-base py-2 sm:py-3"
                                             required
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-300 mb-2">Email</label>
+                                        <label className="block text-[10px] sm:text-xs lg:text-sm font-medium text-slate-300 mb-1 sm:mb-2">Email</label>
                                         <input
                                             type="email"
                                             value={customerEmail}
                                             onChange={(e) => setCustomerEmail(e.target.value)}
                                             placeholder="john@example.com"
-                                            className="input"
+                                            className="input text-xs sm:text-sm lg:text-base py-2 sm:py-3"
                                             required
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-300 mb-2">Shipping Address</label>
+                                        <label className="block text-[10px] sm:text-xs lg:text-sm font-medium text-slate-300 mb-1 sm:mb-2">Shipping Address</label>
                                         <textarea
                                             value={shippingAddress}
                                             onChange={(e) => setShippingAddress(e.target.value)}
                                             placeholder="123 Main St, City, Country"
-                                            className="input min-h-[80px]"
+                                            className="input text-xs sm:text-sm lg:text-base py-2 sm:py-3 min-h-[60px] sm:min-h-[80px]"
                                             required
                                         />
                                     </div>
 
-                                    <button type="submit" className="btn btn-primary w-full" disabled={loading}>
+                                    <button type="submit" className="btn btn-primary w-full text-xs sm:text-sm lg:text-base py-2 sm:py-3" disabled={loading}>
                                         {loading ? 'Processing...' : 'Place Order'}
                                     </button>
                                 </form>
