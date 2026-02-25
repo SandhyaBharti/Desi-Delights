@@ -84,30 +84,30 @@ const Users = () => {
 
                 {/* Stats Cards */}
                 {stats && (
-                    <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-1.5 lg:gap-4 mb-2 sm:mb-3 lg:mb-6 animate-slide-up">
-                        <div className="card-hover bg-gradient-to-br from-blue-500 to-blue-600 text-white p-1.5 sm:p-2 lg:p-4 rounded-lg shadow-lg">
+                    <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-1.5 sm:gap-2 lg:gap-4 mb-3 sm:mb-4 lg:mb-6 animate-slide-up">
+                        <div className="card-hover bg-gradient-to-br from-blue-500 to-blue-600 text-white p-2 sm:p-2.5 lg:p-4 rounded-lg shadow-lg">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-blue-100 text-[6px] sm:text-[8px] lg:text-xs">Total Users</p>
-                                    <p className="text-xs sm:text-sm lg:text-xl font-bold">{stats.totalUsers}</p>
+                                    <p className="text-blue-100 text-[8px] sm:text-[10px] lg:text-xs">Total Users</p>
+                                    <p className="text-sm sm:text-base lg:text-xl font-bold">{stats.totalUsers}</p>
                                 </div>
                                 <div className="text-sm sm:text-base lg:text-2xl">👥</div>
                             </div>
                         </div>
-                        <div className="card-hover bg-gradient-to-br from-purple-500 to-purple-600 text-white p-1.5 sm:p-2 lg:p-4 rounded-lg shadow-lg">
+                        <div className="card-hover bg-gradient-to-br from-purple-500 to-purple-600 text-white p-2 sm:p-2.5 lg:p-4 rounded-lg shadow-lg">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-purple-100 text-[6px] sm:text-[8px] lg:text-xs">Admin Users</p>
-                                    <p className="text-xs sm:text-sm lg:text-xl font-bold">{stats.adminUsers}</p>
+                                    <p className="text-purple-100 text-[8px] sm:text-[10px] lg:text-xs">Admin Users</p>
+                                    <p className="text-sm sm:text-base lg:text-xl font-bold">{stats.adminUsers}</p>
                                 </div>
                                 <div className="text-sm sm:text-base lg:text-2xl">🛡️</div>
                             </div>
                         </div>
-                        <div className="card-hover bg-gradient-to-br from-green-500 to-green-600 text-white p-1.5 sm:p-2 lg:p-4 rounded-lg shadow-lg">
+                        <div className="card-hover bg-gradient-to-br from-green-500 to-green-600 text-white p-2 sm:p-2.5 lg:p-4 rounded-lg shadow-lg">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-green-100 text-[6px] sm:text-[8px] lg:text-xs">Regular Users</p>
-                                    <p className="text-xs sm:text-sm lg:text-xl font-bold">{stats.regularUsers}</p>
+                                    <p className="text-green-100 text-[8px] sm:text-[10px] lg:text-xs">Regular Users</p>
+                                    <p className="text-sm sm:text-base lg:text-xl font-bold">{stats.regularUsers}</p>
                                 </div>
                                 <div className="text-sm sm:text-base lg:text-2xl">👤</div>
                             </div>
@@ -116,11 +116,11 @@ const Users = () => {
                 )}
 
                 {/* Filters */}
-                <div className="card-hover mb-2 sm:mb-3 lg:mb-6 animate-slide-up">
-                    <div className="p-2 sm:p-3 lg:p-4">
-                        <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 lg:gap-4">
+                <div className="card-hover mb-3 sm:mb-4 lg:mb-6 animate-slide-up">
+                    <div className="p-2.5 sm:p-3 lg:p-4">
+                        <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 lg:gap-4">
                             <div className="relative">
-                                <span className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 text-slate-400">
+                                <span className="absolute left-2.5 sm:left-3 top-1/2 transform -translate-y-1/2 text-slate-400">
                                     🔍
                                 </span>
                                 <input
@@ -128,7 +128,7 @@ const Users = () => {
                                     placeholder="Search users..."
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
-                                    className="input pl-6 sm:pl-8 text-[10px] sm:text-xs lg:text-sm py-1.5 sm:py-2"
+                                    className="input pl-7 sm:pl-8 text-xs sm:text-sm lg:text-base py-2 sm:py-2"
                                 />
                             </div>
 
@@ -136,7 +136,7 @@ const Users = () => {
                                 <select
                                     value={roleFilter}
                                     onChange={(e) => setRoleFilter(e.target.value)}
-                                    className="input text-[10px] sm:text-xs lg:text-sm py-1.5 sm:py-2"
+                                    className="input text-xs sm:text-sm lg:text-base py-2 sm:py-2"
                                 >
                                     <option value="all">All Roles</option>
                                     <option value="admin">Admin</option>
@@ -157,44 +157,44 @@ const Users = () => {
                         <table className="w-full">
                             <thead>
                                 <tr className="border-b border-slate-200">
-                                    <th className="text-left p-2 sm:p-3 lg:p-4 font-semibold text-slate-700 text-xs sm:text-sm">User</th>
-                                    <th className="text-left p-2 sm:p-3 lg:p-4 font-semibold text-slate-700 text-xs sm:text-sm">Role</th>
-                                    <th className="text-left p-2 sm:p-3 lg:p-4 font-semibold text-slate-700 text-xs sm:text-sm">Joined</th>
-                                    <th className="text-left p-2 sm:p-3 lg:p-4 font-semibold text-slate-700 text-xs sm:text-sm">Actions</th>
+                                    <th className="text-left p-3 lg:p-4 font-semibold text-slate-700 text-sm">User</th>
+                                    <th className="text-left p-3 lg:p-4 font-semibold text-slate-700 text-sm">Role</th>
+                                    <th className="text-left p-3 lg:p-4 font-semibold text-slate-700 text-sm">Joined</th>
+                                    <th className="text-left p-3 lg:p-4 font-semibold text-slate-700 text-sm">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {filteredUsers.map((user) => (
                                     <tr key={user._id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                                        <td className="p-2 sm:p-3 lg:p-4">
+                                        <td className="p-3 lg:p-4">
                                             <div>
-                                                <p className="font-semibold text-slate-800 text-xs sm:text-sm lg:text-base">{user.name}</p>
-                                                <p className="text-[10px] sm:text-xs text-slate-500">{user.email}</p>
+                                                <p className="font-semibold text-slate-800 text-sm lg:text-base">{user.name}</p>
+                                                <p className="text-xs text-slate-500">{user.email}</p>
                                             </div>
                                         </td>
-                                        <td className="p-2 sm:p-3 lg:p-4">
+                                        <td className="p-3 lg:p-4">
                                             <select
                                                 value={user.role}
                                                 onChange={(e) => handleRoleChange(user._id, e.target.value)}
-                                                className={`px-2 py-1 rounded-full text-[10px] sm:text-xs font-medium ${
+                                                className={`px-3 py-1.5 rounded-full text-xs font-medium ${
                                                     user.role === 'admin'
                                                         ? 'bg-purple-100 text-purple-700 border-purple-300'
                                                         : 'bg-blue-100 text-blue-700 border-blue-300'
-                                                    } border`}
+                                                } border`}
                                             >
                                                 <option value="user">👤 User</option>
                                                 <option value="admin">🛡️ Admin</option>
                                             </select>
                                         </td>
-                                        <td className="p-2 sm:p-3 lg:p-4">
-                                            <p className="text-[10px] sm:text-xs text-slate-600">
+                                        <td className="p-3 lg:p-4">
+                                            <p className="text-xs text-slate-600">
                                                 {new Date(user.createdAt).toLocaleDateString()}
                                             </p>
                                         </td>
-                                        <td className="p-2 sm:p-3 lg:p-4">
+                                        <td className="p-3 lg:p-4">
                                             <button
                                                 onClick={() => handleDeleteUser(user._id)}
-                                                className="btn btn-danger btn-sm text-xs sm:text-sm"
+                                                className="btn btn-danger btn-sm text-xs"
                                                 title="Delete user"
                                             >
                                                 🗑️
@@ -207,19 +207,19 @@ const Users = () => {
                     </div>
 
                     {/* Mobile/Tablet Cards */}
-                    <div className="lg:hidden space-y-1.5 sm:space-y-2">
+                    <div className="lg:hidden space-y-2 sm:space-y-3">
                         {filteredUsers.map((user) => (
-                            <div key={user._id} className="card p-1.5 sm:p-2 border border-slate-200 rounded-lg">
-                                <div className="flex flex-col gap-1.5 sm:gap-2">
+                            <div key={user._id} className="card p-2 sm:p-3 border border-slate-200 rounded-lg">
+                                <div className="flex flex-col gap-2 sm:gap-3">
                                     {/* User Info */}
                                     <div className="flex items-start justify-between">
-                                        <div className="flex-1">
-                                            <p className="font-semibold text-slate-800 text-[10px] sm:text-xs">{user.name}</p>
-                                            <p className="text-[6px] sm:text-[8px] text-slate-500">{user.email}</p>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="font-semibold text-slate-800 text-xs sm:text-sm truncate">{user.name}</p>
+                                            <p className="text-[8px] sm:text-[10px] text-slate-500 truncate">{user.email}</p>
                                         </div>
                                         <button
                                             onClick={() => handleDeleteUser(user._id)}
-                                            className="btn btn-danger btn-xs text-[6px] sm:text-[8px]"
+                                            className="btn btn-danger btn-xs text-[8px] sm:text-xs flex-shrink-0 ml-2"
                                             title="Delete user"
                                         >
                                             🗑️
@@ -231,7 +231,7 @@ const Users = () => {
                                         <select
                                             value={user.role}
                                             onChange={(e) => handleRoleChange(user._id, e.target.value)}
-                                            className={`px-1.5 py-0.5 rounded-full text-[6px] sm:text-[8px] font-medium ${
+                                            className={`px-2 py-1 rounded-full text-[8px] sm:text-[10px] font-medium flex-shrink-0 ${
                                                 user.role === 'admin'
                                                     ? 'bg-purple-100 text-purple-700 border-purple-300'
                                                     : 'bg-blue-100 text-blue-700 border-blue-300'
@@ -240,7 +240,7 @@ const Users = () => {
                                             <option value="user">👤 User</option>
                                             <option value="admin">🛡️ Admin</option>
                                         </select>
-                                        <p className="text-[6px] sm:text-[8px] text-slate-600">
+                                        <p className="text-[8px] sm:text-[10px] text-slate-600 flex-shrink-0">
                                             {new Date(user.createdAt).toLocaleDateString()}
                                         </p>
                                     </div>
