@@ -20,10 +20,12 @@ const Navbar = () => {
     // Close dropdowns when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
+            // Close profile dropdown if clicking outside
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setShowProfileDropdown(false);
             }
-            if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+            // Close mobile menu if clicking outside and not clicking the toggle button
+            if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && !event.target.closest('[data-mobile-toggle]')) {
                 setShowMobileMenu(false);
             }
         };
@@ -81,6 +83,7 @@ const Navbar = () => {
 
                     {/* Mobile menu button - Right side, only on mobile and tablet */}
                     <button
+                        data-mobile-toggle
                         onClick={() => setShowMobileMenu(!showMobileMenu)}
                         className="p-1 rounded hover:bg-slate-100 transition-colors bg-slate-50/50"
                     >
