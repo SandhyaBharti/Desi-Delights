@@ -1,4 +1,4 @@
-# Desi Delights - E-Commerce Platform
+# iNet-Mart - E-Commerce Platform
 
 A modern full-stack MERN (MongoDB, Express, React, Node.js) e-commerce platform for Desi Delights with complete product management, shopping cart, order processing, and analytics capabilities.
 
