@@ -24,7 +24,7 @@ const app = express();
 
 // CORS configuration - Allow all origins for development
 const corsOptions = {
-    origin: ['http://localhost:3001', 'http://localhost:3000', 'http://localhost:5173'],
+    origin: ['http://localhost:3001', 'http://localhost:3000', 'http://localhost:5173', 'https://inet-mart.vercel.app'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -61,7 +61,7 @@ app.get('/api/test-users', async (req, res) => {
     try {
         const User = (await import('./models/User.js')).default;
         const users = await User.find({}).select('-password');
-        res.json({ 
+        res.json({
             count: users.length,
             users: users.map(u => ({ name: u.name, email: u.email, role: u.role }))
         });

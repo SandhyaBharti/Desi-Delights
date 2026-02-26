@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: '/api',
+    baseURL: 'https://inet-mart-v6h9.onrender.com/api',
     headers: {
         'Content-Type': 'application/json'
     }
@@ -38,7 +38,7 @@ api.interceptors.response.use(
 export const getImageUrl = (imageUrl) => {
     if (!imageUrl) return '';
     if (imageUrl.startsWith('http')) return imageUrl;
-    return `http://localhost:5002${imageUrl}`;
+    return `https://inet-mart-v6h9.onrender.com${imageUrl}`;
 };
 
 export default api;
