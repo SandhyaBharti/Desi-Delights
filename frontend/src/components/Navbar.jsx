@@ -120,13 +120,6 @@ const Navbar = () => {
                                         </span>
                                     </Link>
 
-                                    <Link to="/users" className="nav-link">
-                                        <span className="flex items-center gap-2">
-                                            <span className="text-base lg:text-lg">👥</span>
-                                            <span className="font-semibold text-sm lg:text-base">Users</span>
-                                        </span>
-                                    </Link>
-
                                     <Link to="/activity" className="nav-link">
                                         <span className="flex items-center gap-2">
                                             <span className="text-base lg:text-lg">📋</span>
@@ -285,13 +278,6 @@ const Navbar = () => {
                                         <span className="flex items-center gap-2">
                                             <span className="text-sm">📊</span>
                                             <span className="font-semibold text-xs">Dashboard</span>
-                                        </span>
-                                    </Link>
-
-                                    <Link to="/users" className="block px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors" onClick={() => setShowMobileMenu(false)}>
-                                        <span className="flex items-center gap-2">
-                                            <span className="text-sm">👥</span>
-                                            <span className="font-semibold text-xs">Users</span>
                                         </span>
                                     </Link>
 
