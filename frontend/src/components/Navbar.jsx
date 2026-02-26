@@ -144,16 +144,18 @@ const Navbar = () => {
                                     </span>
                                 </Link>
                             )}
-                            <Link to="/cart" className="relative group">
-                                <div className="nav-link p-2">
-                                    <span className="text-lg lg:text-xl block group-hover:scale-110 transition-transform">🛒</span>
-                                    {getTotalItems() > 0 && (
-                                        <span className="absolute -top-1 -right-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[20px] text-center shadow-lg animate-bounce-soft">
-                                            {getTotalItems()}
-                                        </span>
-                                    )}
-                                </div>
-                            </Link>
+                            {user && (
+                                <Link to="/cart" className="relative group">
+                                    <div className="nav-link p-2">
+                                        <span className="text-lg lg:text-xl block group-hover:scale-110 transition-transform">🛒</span>
+                                        {getTotalItems() > 0 && (
+                                            <span className="absolute -top-1 -right-1 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[20px] text-center shadow-lg animate-bounce-soft">
+                                                {getTotalItems()}
+                                            </span>
+                                        )}
+                                    </div>
+                                </Link>
+                            )}
                         </div>
 
                         {/* User section */}
@@ -176,95 +178,95 @@ const Navbar = () => {
                                         </span>
                                     </button>
 
-                                {showProfileDropdown && (
-                                    <div className="absolute right-0 mt-2 w-64 glass-morphism border border-slate-200 rounded-xl shadow-2xl overflow-hidden animate-fade-in">
-                                        <div className="p-4 border-b border-slate-200">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
-                                                    <span className="text-white font-bold">{user.name.charAt(0).toUpperCase()}</span>
+                                    {showProfileDropdown && (
+                                        <div className="absolute right-0 mt-2 w-64 glass-morphism border border-slate-200 rounded-xl shadow-2xl overflow-hidden animate-fade-in">
+                                            <div className="p-4 border-b border-slate-200">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                                                        <span className="text-white font-bold">{user.name.charAt(0).toUpperCase()}</span>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-slate-800 font-bold">{user.name}</p>
+                                                        <p className="text-slate-600 text-xs">{user.email}</p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <p className="text-slate-800 font-bold">{user.name}</p>
-                                                    <p className="text-slate-600 text-xs">{user.email}</p>
+                                            </div>
+                                            <div className="p-3">
+                                                <div className="px-3 py-2 text-slate-600 text-xs">
+                                                    Role: {isAdmin ? 'Administrator' : 'Customer'}
                                                 </div>
+                                                <div className="px-3 py-2 text-slate-600 text-xs">
+                                                    Member since: {new Date().toLocaleDateString()}
+                                                </div>
+                                                {!isAdmin && (
+                                                    <div className="mt-2 border-t border-slate-200 pt-2">
+                                                        {!showUpgrade ? (
+                                                            <button
+                                                                onClick={() => setShowUpgrade(true)}
+                                                                className="w-full text-left px-3 py-2 text-xs text-purple-600 font-semibold hover:bg-purple-50 rounded-lg transition-colors"
+                                                            >
+                                                                🛡️ Upgrade to Admin
+                                                            </button>
+                                                        ) : (
+                                                            <form onSubmit={handleUpgradeRole} className="px-3 py-2 space-y-2">
+                                                                <p className="text-xs font-semibold text-slate-700">Enter Admin Secret Key:</p>
+                                                                <input
+                                                                    type="password"
+                                                                    value={upgradeSecret}
+                                                                    onChange={(e) => setUpgradeSecret(e.target.value)}
+                                                                    placeholder="Admin secret key"
+                                                                    className="w-full text-xs border border-slate-300 rounded-lg px-2 py-1.5 focus:outline-none focus:border-purple-400"
+                                                                    autoFocus
+                                                                />
+                                                                {upgradeError && <p className="text-red-500 text-xs">{upgradeError}</p>}
+                                                                <div className="flex gap-2">
+                                                                    <button
+                                                                        type="submit"
+                                                                        disabled={upgradeLoading}
+                                                                        className="flex-1 bg-purple-600 text-white text-xs py-1.5 rounded-lg hover:bg-purple-700 transition-colors"
+                                                                    >
+                                                                        {upgradeLoading ? '...' : 'Confirm'}
+                                                                    </button>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => { setShowUpgrade(false); setUpgradeError(''); setUpgradeSecret(''); }}
+                                                                        className="flex-1 bg-slate-200 text-slate-600 text-xs py-1.5 rounded-lg hover:bg-slate-300 transition-colors"
+                                                                    >
+                                                                        Cancel
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        )}
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
-                                        <div className="p-3">
-                                            <div className="px-3 py-2 text-slate-600 text-xs">
-                                                Role: {isAdmin ? 'Administrator' : 'Customer'}
-                                            </div>
-                                            <div className="px-3 py-2 text-slate-600 text-xs">
-                                                Member since: {new Date().toLocaleDateString()}
-                                            </div>
-                                            {!isAdmin && (
-                                                <div className="mt-2 border-t border-slate-200 pt-2">
-                                                    {!showUpgrade ? (
-                                                        <button
-                                                            onClick={() => setShowUpgrade(true)}
-                                                            className="w-full text-left px-3 py-2 text-xs text-purple-600 font-semibold hover:bg-purple-50 rounded-lg transition-colors"
-                                                        >
-                                                            🛡️ Upgrade to Admin
-                                                        </button>
-                                                    ) : (
-                                                        <form onSubmit={handleUpgradeRole} className="px-3 py-2 space-y-2">
-                                                            <p className="text-xs font-semibold text-slate-700">Enter Admin Secret Key:</p>
-                                                            <input
-                                                                type="password"
-                                                                value={upgradeSecret}
-                                                                onChange={(e) => setUpgradeSecret(e.target.value)}
-                                                                placeholder="Admin secret key"
-                                                                className="w-full text-xs border border-slate-300 rounded-lg px-2 py-1.5 focus:outline-none focus:border-purple-400"
-                                                                autoFocus
-                                                            />
-                                                            {upgradeError && <p className="text-red-500 text-xs">{upgradeError}</p>}
-                                                            <div className="flex gap-2">
-                                                                <button
-                                                                    type="submit"
-                                                                    disabled={upgradeLoading}
-                                                                    className="flex-1 bg-purple-600 text-white text-xs py-1.5 rounded-lg hover:bg-purple-700 transition-colors"
-                                                                >
-                                                                    {upgradeLoading ? '...' : 'Confirm'}
-                                                                </button>
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => { setShowUpgrade(false); setUpgradeError(''); setUpgradeSecret(''); }}
-                                                                    className="flex-1 bg-slate-200 text-slate-600 text-xs py-1.5 rounded-lg hover:bg-slate-300 transition-colors"
-                                                                >
-                                                                    Cancel
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
+
+                                <button
+                                    onClick={handleLogout}
+                                    className="btn btn-ghost group relative overflow-hidden"
+                                >
+                                    <span className="relative z-10 flex items-center gap-2">
+                                        <span>➜</span>
+                                        <span>Logout</span>
+                                    </span>
+                                </button>
                             </div>
+                        )}
 
-                            <button
-                                onClick={handleLogout}
-                                className="btn btn-ghost group relative overflow-hidden"
-                            >
-                                <span className="relative z-10 flex items-center gap-2">
-                                    <span>➜</span>
-                                    <span>Logout</span>
-                                </span>
-                            </button>
-                        </div>
-                    )}
-
-                    {!user && (
-                        <div className="flex items-center gap-2">
-                            <Link to="/login" className="btn btn-ghost">
-                                Login
-                            </Link>
-                            <Link to="/register" className="btn btn-primary">
-                                Register
-                            </Link>
-                        </div>
-                    )}
-                </div>
+                        {!user && (
+                            <div className="flex items-center gap-2">
+                                <Link to="/login" className="btn btn-ghost">
+                                    Login
+                                </Link>
+                                <Link to="/register" className="btn btn-primary">
+                                    Register
+                                </Link>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Mobile Menu - Always Available */}
