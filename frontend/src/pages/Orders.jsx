@@ -6,6 +6,8 @@ const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [statusFilter, setStatusFilter] = useState('');
+    const user = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    const isAdmin = user.role === 'admin';
 
     const statuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
 
@@ -43,7 +45,9 @@ const Orders = () => {
             <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
                 <div className="mb-4 sm:mb-6 lg:mb-8 animate-fade-in">
                     <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-1 sm:mb-2 gradient-text">Orders</h1>
-                    <p className="text-slate-400 text-xs sm:text-sm lg:text-lg">Manage customer orders</p>
+                    <p className="text-slate-400 text-xs sm:text-sm lg:text-lg">
+                        {isAdmin ? 'Manage customer orders' : 'Your orders'}
+                    </p>
                 </div>
 
                 {/* Status Filter */}
@@ -107,15 +111,17 @@ const Orders = () => {
                                     <p className="text-slate-400 text-[10px] sm:text-sm">Total Amount</p>
                                     <p className="text-base sm:text-lg lg:text-2xl font-bold text-green-400">₹{order.totalAmount.toFixed(2)}</p>
                                 </div>
-                                <select
-                                    value={order.status}
-                                    onChange={(e) => updateStatus(order._id, e.target.value)}
-                                    className="input max-w-[120px] sm:max-w-[200px] text-xs sm:text-sm lg:text-base py-2 sm:py-3"
-                                >
-                                    {statuses.map(status => (
-                                        <option key={status} value={status}>{status.charAt(0).toUpperCase() + status.slice(1)}</option>
-                                    ))}
-                                </select>
+                                {isAdmin && (
+                                    <select
+                                        value={order.status}
+                                        onChange={(e) => updateStatus(order._id, e.target.value)}
+                                        className="input max-w-[120px] sm:max-w-[200px] text-xs sm:text-sm lg:text-base py-2 sm:py-3"
+                                    >
+                                        {statuses.map(status => (
+                                            <option key={status} value={status}>{status.charAt(0).toUpperCase() + status.slice(1)}</option>
+                                        ))}
+                                    </select>
+                                )}
                             </div>
                         </div>
                     ))}

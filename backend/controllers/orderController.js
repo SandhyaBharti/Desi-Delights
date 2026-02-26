@@ -11,6 +11,11 @@ export const getOrders = async (req, res) => {
 
         let query = {};
 
+        // Regular users can only see their own orders
+        if (req.user.role !== 'admin') {
+            query.userId = req.user._id;
+        }
+
         // Filter by status
         if (status) {
             query.status = status;
